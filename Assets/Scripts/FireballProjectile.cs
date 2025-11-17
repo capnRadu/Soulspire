@@ -27,6 +27,11 @@ public class FireballProjectile : MonoBehaviour
             return;
         }
 
+        ProjectileTrajectoryAndMovement();
+    }
+
+    private void ProjectileTrajectoryAndMovement()
+    {
         Vector3 currentTargetPos = target.position;
         Vector3 midPoint = (startPos + currentTargetPos) / 2f;
         controlPoint = midPoint + 2f * arcHeight * Vector3.up;

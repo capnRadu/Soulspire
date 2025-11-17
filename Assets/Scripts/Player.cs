@@ -25,14 +25,9 @@ public class Player : MonoBehaviour
         Enemy target = GetClosestEnemy();
         if (target == null) return;
 
-        Vector3 direction = target.transform.position - transform.position;
-        direction.y = 0;
-        Quaternion targetRotation = Quaternion.LookRotation(direction);
-        float step = rotationSpeed * Time.deltaTime;
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, step);
+        RotateTowardsTarget(target);
 
         float cooldownDuration = 1f / castAnimation.length;
-
         if (!isOnCooldown)
         {
             StartCoroutine(ShootCooldown(target));
@@ -62,6 +57,15 @@ public class Player : MonoBehaviour
         }
 
         return closest;
+    }
+
+    private void RotateTowardsTarget(Enemy target)
+    {
+        Vector3 direction = target.transform.position - transform.position;
+        direction.y = 0;
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        float step = rotationSpeed * Time.deltaTime;
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, step);
     }
 
     private IEnumerator ShootCooldown(Enemy target)

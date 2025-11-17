@@ -39,27 +39,11 @@ public class Enemy : MonoBehaviour
         {
             if (Vector3.Distance(transform.position, tower.position) > minimumDistanceToTower)
             {
-                Vector3 direction = (tower.position - transform.position).normalized;
-                transform.position += speed * Time.deltaTime * direction;
-                transform.position = new Vector3(transform.position.x, yPos, transform.position.z);
-
-                if (!animator.GetBool("isWalking"))
-                {
-                    animator.SetBool("isWalking", true);
-                }
+                MoveTowardsTower();
             }
             else
             {
-                if (animator.GetBool("isWalking"))
-                {
-                    animator.SetBool("isWalking", false);
-                }
-
-                if (Time.time >= nextAttackTime)
-                {
-                    animator.SetTrigger("attack");
-                    nextAttackTime = Time.time + attackRate;
-                }
+                CheckAttack();
             }
         }
     }
@@ -68,6 +52,32 @@ public class Enemy : MonoBehaviour
     {
         yield return new WaitForSeconds(spawnAnimationDuration);
         enabled = true;
+    }
+
+    private void MoveTowardsTower()
+    {
+        Vector3 direction = (tower.position - transform.position).normalized;
+        transform.position += speed * Time.deltaTime * direction;
+        transform.position = new Vector3(transform.position.x, yPos, transform.position.z);
+
+        if (!animator.GetBool("isWalking"))
+        {
+            animator.SetBool("isWalking", true);
+        }
+    }
+
+    private void CheckAttack()
+    {
+        if (animator.GetBool("isWalking"))
+        {
+            animator.SetBool("isWalking", false);
+        }
+
+        if (Time.time >= nextAttackTime)
+        {
+            animator.SetTrigger("attack");
+            nextAttackTime = Time.time + attackRate;
+        }
     }
 
     public void Attack()
