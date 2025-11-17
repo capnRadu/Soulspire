@@ -1,4 +1,5 @@
 #if UNITY_EDITOR
+using System.Collections;
 using UnityEditor;
 #endif
 
@@ -13,6 +14,24 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float maxSpawnRadius = 15f;
 
     [SerializeField] private float debugYLevelOffset = 0.8f;
+
+    private void Start()
+    {
+        StartCoroutine(SpawnEnemies());
+    }
+
+    private IEnumerator SpawnEnemies()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+
+            if (enemyPrefabs.Length != 0 && tower != null)
+            {
+                SpawnObjectNearTower();
+            }
+        }
+    }
 
     private void Update()
     {
