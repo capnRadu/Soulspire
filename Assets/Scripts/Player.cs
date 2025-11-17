@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
 
         if (_fireCooldown <= 0f)
         {
-            Shoot(target);
+            Shoot(target.gameObject);
             _fireCooldown = 1f / fireRate;
         }
     }
@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
         return closest;
     }
 
-    private void Shoot(Enemy target)
+    private void Shoot(GameObject target)
     {
         GameObject proj = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
         FireballProjectile projectile = proj.GetComponent<FireballProjectile>();

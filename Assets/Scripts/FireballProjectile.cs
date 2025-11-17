@@ -6,24 +6,31 @@ public class FireballProjectile : MonoBehaviour
     [SerializeField] private float arcHeight = 5.0f;
     [SerializeField] private AnimationCurve speedCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
-    [SerializeField] private int damage = 5;
-
+    private Transform target;
     private Vector3 startPos;
-    private Vector3 targetPosAtLaunch;
     private Vector3 controlPoint;
     private float journeyTimer = 0f;
 
+    [SerializeField] private int damage = 5;
+
     public void Initialize(Transform enemyTarget)
     {
+        target = enemyTarget;
         startPos = transform.position;
-        targetPosAtLaunch = enemyTarget.position;
-
-        Vector3 midPoint = (startPos + targetPosAtLaunch) / 2f;
-        controlPoint = midPoint + 2f * arcHeight * Vector3.up;
     }
 
     private void Update()
     {
+        if (target == null)
+        {
+            Arrive();
+            return;
+        }
+
+        Vector3 currentTargetPos = target.position;
+        Vector3 midPoint = (startPos + currentTargetPos) / 2f;
+        controlPoint = midPoint + 2f * arcHeight * Vector3.up;
+
         if (journeyTimer < duration)
         {
             journeyTimer += Time.deltaTime;
@@ -31,11 +38,11 @@ public class FireballProjectile : MonoBehaviour
             float linearT = journeyTimer / duration;
             float t = speedCurve.Evaluate(linearT);
 
-            transform.position = CalculateQuadraticBezier(t, startPos, controlPoint, targetPosAtLaunch);
+            transform.position = CalculateQuadraticBezier(t, startPos, controlPoint, currentTargetPos);
         }
         else
         {
-            transform.position = targetPosAtLaunch;
+            transform.position = currentTargetPos;
             Arrive();
         }
     }
