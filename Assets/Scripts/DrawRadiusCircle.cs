@@ -2,20 +2,15 @@ using UnityEngine;
 
 public class DrawRadiusCircle : MonoBehaviour
 {
-    private Player player;
+    [SerializeField] private Player player;
     private float radius;
     [SerializeField] private int segments = 50;
 
     private LineRenderer lineRenderer;
 
-    private void Awake()
-    {
-        player = GetComponentInParent<Player>();
-        radius = player.DetectionRadius;
-    }
-
     private void Start()
     {
+        radius = player.DetectionRadius;
         lineRenderer = GetComponent<LineRenderer>();
 
         SetupLineRenderer();

@@ -1,26 +1,41 @@
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private Animator animator;
+
+    [SerializeField] private AnimationClip castAnimation;
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform firePoint;
     [SerializeField] private float detectionRadius = 10f;
     public float DetectionRadius => detectionRadius;
-    [SerializeField] private float fireRate = 1f;
 
-    private float _fireCooldown;
+    private float rotationSpeed = 720f;
+
+    private bool isOnCooldown = false;
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     private void Update()
     {
-        _fireCooldown -= Time.deltaTime;
-
         Enemy target = GetClosestEnemy();
         if (target == null) return;
 
-        if (_fireCooldown <= 0f)
+        Vector3 direction = target.transform.position - transform.position;
+        direction.y = 0;
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        float step = rotationSpeed * Time.deltaTime;
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, step);
+
+        float cooldownDuration = 1f / castAnimation.length;
+
+        if (!isOnCooldown)
         {
-            Shoot(target.gameObject);
-            _fireCooldown = 1f / fireRate;
+            StartCoroutine(ShootCooldown(target));
         }
     }
 
@@ -47,6 +62,21 @@ public class Player : MonoBehaviour
         }
 
         return closest;
+    }
+
+    private IEnumerator ShootCooldown(Enemy target)
+    {
+        isOnCooldown = true;
+        animator.SetTrigger("cast");
+
+        yield return new WaitForSeconds(0.7f);
+
+        Shoot(target.gameObject);
+
+        float cooldown = 1f / castAnimation.length;
+        yield return new WaitForSeconds(cooldown);
+
+        isOnCooldown = false;
     }
 
     private void Shoot(GameObject target)
