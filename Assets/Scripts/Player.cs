@@ -35,6 +35,8 @@ public class Player : MonoBehaviour
 
         foreach (var e in enemies)
         {
+            if (e.enabled == false) continue;
+
             float dist = Vector3.Distance(transform.position, e.transform.position);
 
             if (dist < minDist && dist <= detectionRadius)

@@ -7261,6 +7261,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1632124239}
+  - component: {fileID: 1632124240}
   m_Layer: 0
   m_Name: Tower
   m_TagString: Tower
@@ -7288,6 +7289,19 @@ Transform:
   - {fileID: 1407152726}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1632124240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632124237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b182c731e25a734cbbbe53de7a34af2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  maxHealth: 100
 --- !u!1 &1678691151
 GameObject:
   m_ObjectHideFlags: 0
