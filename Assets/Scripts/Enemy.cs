@@ -4,7 +4,7 @@ public class Enemy : MonoBehaviour
 {
     private Transform tower;
 
-    private float speed = 10f;
+    private float speed = 3f;
     private float minimumDistanceToTower = 3f;
     private float yPos;
 
