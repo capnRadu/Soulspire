@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(2f);
 
             if (enemyPrefabs.Length != 0 && tower != null)
             {

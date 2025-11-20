@@ -2291,6 +2291,7 @@ GameObject:
   - component: {fileID: 596824593821567457}
   - component: {fileID: 3356474218222844914}
   - component: {fileID: 3683035648011658481}
+  - component: {fileID: 6122868991025087776}
   m_Layer: 0
   m_Name: Skeleton
   m_TagString: Untagged
@@ -2390,6 +2391,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHealth: 5
+--- !u!114 &6122868991025087776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6680940179413830124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06b6ea440d384cf49bc979a3b21d47c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDeathAction
 --- !u!1 &6882462670326557524
 GameObject:
   m_ObjectHideFlags: 0
