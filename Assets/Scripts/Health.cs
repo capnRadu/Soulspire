@@ -4,6 +4,7 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     private Animator animator;
+    private HealthBar healthBar;
 
     [SerializeField] private int maxHealth = 100;
     private int currentHealth;
@@ -13,11 +14,23 @@ public class Health : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         currentHealth = maxHealth;
+
+        healthBar = GetComponentInChildren<HealthBar>();
+        if (healthBar != null)
+        {
+            healthBar.SetMaxHealth(maxHealth);
+        }
     }
 
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+
+        if (healthBar != null)
+        {
+            healthBar.SetHealth(currentHealth);
+        }
+
         Debug.Log($"{gameObject.name} took {damage} damage. Current health: {currentHealth}");
 
         if (currentHealth <= 0)
