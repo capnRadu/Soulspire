@@ -5,6 +5,7 @@ public class FireballProjectile : MonoBehaviour
     [SerializeField] private float duration = 1.0f;
     [SerializeField] private float arcHeight = 5.0f;
     [SerializeField] private AnimationCurve speedCurve = AnimationCurve.Linear(0, 0, 1, 1);
+    [SerializeField] private GameObject explosionPrefab;
 
     private Transform target;
     private Vector3 startPos;
@@ -23,7 +24,7 @@ public class FireballProjectile : MonoBehaviour
     {
         if (target == null)
         {
-            Arrive();
+            Arrive(false);
             return;
         }
 
@@ -48,7 +49,7 @@ public class FireballProjectile : MonoBehaviour
         else
         {
             transform.position = currentTargetPos;
-            Arrive();
+            Arrive(true);
         }
     }
 
@@ -69,12 +70,17 @@ public class FireballProjectile : MonoBehaviour
         if (healthComponent != null)
         {
             healthComponent.TakeDamage(damage);
-            Arrive();
+            Arrive(true);
         }
     }
 
-    private void Arrive()
+    private void Arrive(bool explosion)
     {
+        if (explosion && explosionPrefab != null)
+        {
+            Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        }
+
         Destroy(gameObject);
     }
 }
