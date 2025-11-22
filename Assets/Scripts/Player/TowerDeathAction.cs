@@ -21,6 +21,7 @@ public class TowerDeathAction : MonoBehaviour
 
     private void HandleDeath()
     {
+        StatsManager.Instance.OnRunEnded();
         SceneManager.LoadScene("SampleScene");
     }
 }
