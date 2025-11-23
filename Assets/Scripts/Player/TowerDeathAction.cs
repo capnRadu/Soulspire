@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class TowerDeathAction : MonoBehaviour
 {
     private Health health;
+
     private void Awake()
     {
         health = GetComponent<Health>();

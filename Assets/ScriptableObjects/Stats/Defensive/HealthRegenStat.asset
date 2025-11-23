@@ -16,7 +16,7 @@ MonoBehaviour:
   type: 1
   category: 1
   baseValue: 0
-  valuePerLevel: 0.5
+  valuePerLevel: 1
   baseCoinCost: 8
   baseSoulCost: 32
   costMultiplier: 1.5

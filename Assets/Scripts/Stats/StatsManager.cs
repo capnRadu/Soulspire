@@ -62,6 +62,7 @@ public class StatsManager : MonoBehaviour
     public int CurrentSouls => currentSouls;
 
     public event Action OnCurrencyChanged;
+    public event Action<StatType> OnStatUpgraded;
 
     private void Awake()
     {
@@ -111,6 +112,7 @@ public class StatsManager : MonoBehaviour
         {
             stat.runLevel++;
             SpendCoins(cost);
+            OnStatUpgraded?.Invoke(type);
 
             Debug.Log($"Upgraded {type} to Run Level {stat.runLevel}. New Value: {stat.GetValue()}");
         }

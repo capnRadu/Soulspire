@@ -3,16 +3,15 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private Health towerHealth;
     private Animator animator;
 
     [SerializeField] private AnimationClip castAnimation;
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform firePoint;
-    [SerializeField] private float detectionRadius = 10f;
-    public float DetectionRadius => detectionRadius;
+    public float DetectionRadius => StatsManager.Instance.GetStatValue(StatType.Range);
 
     private float rotationSpeed = 720f;
-
     private bool isOnCooldown = false;
 
     private void Awake()
@@ -27,7 +26,7 @@ public class Player : MonoBehaviour
 
         RotateTowardsTarget(target);
 
-        float cooldownDuration = 1f / castAnimation.length;
+        // float cooldownDuration = 1f / castAnimation.length;
         if (!isOnCooldown)
         {
             StartCoroutine(ShootCooldown(target));
@@ -43,13 +42,15 @@ public class Player : MonoBehaviour
         Enemy closest = null;
         float minDist = Mathf.Infinity;
 
+        float currentRange = DetectionRadius;
+
         foreach (var e in enemies)
         {
             if (e.enabled == false) continue;
 
             float dist = Vector3.Distance(transform.position, e.transform.position);
 
-            if (dist < minDist && dist <= detectionRadius)
+            if (dist < minDist && dist <= currentRange)
             {
                 minDist = dist;
                 closest = e;
@@ -73,12 +74,18 @@ public class Player : MonoBehaviour
         isOnCooldown = true;
         animator.SetTrigger("cast");
 
+        // animator.speed = StatsManager.Instance.GetStatValue(StatType.AttackSpeed);
+
         yield return new WaitForSeconds(0.7f);
 
         Shoot(target.gameObject);
 
-        float cooldown = 1f / castAnimation.length;
-        yield return new WaitForSeconds(cooldown);
+        // Attack Speed Stat
+        float baseCooldown = castAnimation.length;
+        float attackSpeedStat = StatsManager.Instance.GetStatValue(StatType.AttackSpeed);
+        float calculatedCooldown = baseCooldown / attackSpeedStat;
+
+        yield return new WaitForSeconds(Mathf.Max(calculatedCooldown, 0.1f));
 
         isOnCooldown = false;
     }
@@ -87,6 +94,13 @@ public class Player : MonoBehaviour
     {
         GameObject proj = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
         FireballProjectile projectile = proj.GetComponent<FireballProjectile>();
-        projectile.Initialize(target.transform);
+
+        float damage = StatsManager.Instance.GetStatValue(StatType.Damage);
+        float critChance = StatsManager.Instance.GetStatValue(StatType.CriticalChance);
+        float dmgPerMeter = StatsManager.Instance.GetStatValue(StatType.DamagePerMeter);
+        float lifeSteal = StatsManager.Instance.GetStatValue(StatType.LifeSteal);
+        float healOnKill = StatsManager.Instance.GetStatValue(StatType.HealOnKill);
+
+        projectile.Initialize(target.transform, towerHealth, damage, critChance, dmgPerMeter, lifeSteal, healOnKill);
     }
 }

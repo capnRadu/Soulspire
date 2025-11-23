@@ -7992,10 +7992,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 333452665a79b3f44841a08d274dc387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
+  towerHealth: {fileID: 1632124240}
   castAnimation: {fileID: 7400000, guid: e34e206f6496c2146aa36c459b41dc2f, type: 2}
   projectilePrefab: {fileID: 9004627116475456894, guid: 8f3d25877d62b884bbd54d036c6efd42, type: 3}
   firePoint: {fileID: 73682328}
-  detectionRadius: 12
 --- !u!95 &1572168898
 Animator:
   serializedVersion: 7
@@ -8534,6 +8534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b182c731e25a734cbbbe53de7a34af2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
+  isPlayer: 1
   maxHealth: 100
 --- !u!114 &1632124241
 MonoBehaviour:

@@ -13,8 +13,24 @@ public class DrawRadiusCircle : MonoBehaviour
         radius = player.DetectionRadius;
         lineRenderer = GetComponent<LineRenderer>();
 
+        StatsManager.Instance.OnStatUpgraded += HandleStatUpgrade;
+
         SetupLineRenderer();
         DrawCircle();
+    }
+
+    private void OnDestroy()
+    {
+        StatsManager.Instance.OnStatUpgraded -= HandleStatUpgrade;
+    }
+
+    private void HandleStatUpgrade(StatType type)
+    {
+        if (type == StatType.Range)
+        {
+            radius = player.DetectionRadius;
+            DrawCircle();
+        }
     }
 
     private void SetupLineRenderer()

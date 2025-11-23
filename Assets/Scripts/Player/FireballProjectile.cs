@@ -12,12 +12,24 @@ public class FireballProjectile : MonoBehaviour
     private Vector3 controlPoint;
     private float journeyTimer = 0f;
 
-    [SerializeField] private int damage = 5;
+    private Health towerHealth;
+    private float baseDamage;
+    private float critChance;
+    private float damagePerMeterPercent;
+    private float lifeStealPercent;
+    private float healOnKillAmount;
 
-    public void Initialize(Transform enemyTarget)
+    public void Initialize(Transform enemyTarget, Health towerHealth, float dmg, float crit, float dmgPerMeter, float lifesteal, float healOnKill)
     {
         target = enemyTarget;
         startPos = transform.position;
+        this.towerHealth = towerHealth;
+
+        baseDamage = dmg;
+        critChance = crit;
+        damagePerMeterPercent = dmgPerMeter;
+        lifeStealPercent = lifesteal;
+        healOnKillAmount = healOnKill;
     }
 
     private void Update()
@@ -65,11 +77,38 @@ public class FireballProjectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        collision.gameObject.TryGetComponent<Health>(out Health healthComponent);
-
-        if (healthComponent != null)
+        if (collision.gameObject.TryGetComponent<Health>(out Health enemyHealth))
         {
-            healthComponent.TakeDamage(damage);
+            // Damage Per Meter Stat
+            float distanceTraveled = Vector3.Distance(startPos, transform.position);
+            float distanceMultiplier = 1f + (distanceTraveled * (damagePerMeterPercent / 100f));
+            float finalDamage = baseDamage * distanceMultiplier;
+
+            // Critical Chance Stat
+            bool isCrit = Random.Range(0f, 100f) < critChance;
+
+            if (isCrit)
+            {
+                finalDamage *= 2f; // Double damage on crit
+                Debug.Log("CRITICAL HIT!");
+            }
+
+            bool wasAlive = !enemyHealth.IsDead;
+            enemyHealth.TakeDamage(finalDamage);
+
+            // Life Steal Stat
+            if (lifeStealPercent > 0 && towerHealth != null)
+            {
+                float healAmount = finalDamage * (lifeStealPercent / 100f);
+                towerHealth.Heal(healAmount);
+            }
+
+            // Heal on Kill Stat
+            if (wasAlive && enemyHealth.IsDead && healOnKillAmount > 0 && towerHealth != null)
+            {
+                towerHealth.Heal(healOnKillAmount);
+            }
+
             Arrive(true);
         }
     }
