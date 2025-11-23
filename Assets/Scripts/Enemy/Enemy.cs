@@ -18,6 +18,9 @@ public class Enemy : MonoBehaviour
 
     private float yPos;
 
+    private int coinsOnDeath = 5;
+    public int CoinsOnDeath => coinsOnDeath;
+
     private void Awake()
     {
         tower = GameObject.FindGameObjectWithTag("Tower").transform;

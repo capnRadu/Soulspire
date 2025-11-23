@@ -4,11 +4,13 @@ using UnityEngine;
 public class EnemyDeathAction : MonoBehaviour
 {
     private Health health;
+    private Enemy enemy;
     private Animator animator;
 
     private void Awake()
     {
         health = GetComponent<Health>();
+        enemy = GetComponent<Enemy>();
         animator = GetComponent<Animator>();
     }
 
@@ -24,6 +26,8 @@ public class EnemyDeathAction : MonoBehaviour
 
     private void HandleDeath()
     {
+        StatsManager.Instance.EarnCoins(enemy.CoinsOnDeath);
+
         if (animator != null)
         {
             animator.SetTrigger("hasDied");

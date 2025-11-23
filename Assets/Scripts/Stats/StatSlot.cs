@@ -66,20 +66,13 @@ public class StatSlot : MonoBehaviour
     {
         if (runtimeStat == null) return;
 
-        bool success = false;
-
         if (isHubMode)
         {
-            success = StatsManager.Instance.TryUpgradePermanentStat(runtimeStat.definition.type);
+            StatsManager.Instance.UpgradePermanentStat(runtimeStat.definition.type);
         }
         else
         {
-            success = StatsManager.Instance.TryUpgradeRunStat(runtimeStat.definition.type);
-        }
-
-        if (success)
-        {
-            UpdateUI();
+            StatsManager.Instance.UpgradeRunStat(runtimeStat.definition.type);
         }
     }
 }

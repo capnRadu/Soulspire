@@ -93,39 +93,56 @@ public class StatsManager : MonoBehaviour
         return 0f;
     }
 
-    public bool TryUpgradeRunStat(StatType type)
+    public void UpgradeRunStat(StatType type)
     {
         RuntimeStat stat = stats[type];
         int cost = stat.GetCoinCost();
 
         if (currentCoins >= cost)
         {
-            currentCoins -= cost;
             stat.runLevel++;
-            OnCurrencyChanged?.Invoke();
+            SpendCoins(cost);
 
             Debug.Log($"Upgraded {type} to Run Level {stat.runLevel}. New Value: {stat.GetValue()}");
-            return true;
         }
-
-        return false;
     }
 
-    public bool TryUpgradePermanentStat(StatType type)
+    public void UpgradePermanentStat(StatType type)
     {
         RuntimeStat stat = stats[type];
         int cost = stat.GetSoulCost();
 
         if (currentSouls >= cost)
         {
-            currentSouls -= cost;
             stat.permanentLevel++;
-            OnCurrencyChanged?.Invoke();
+            SpendSouls(cost);
 
             Debug.Log($"Upgraded {type} Permanently to Level {stat.permanentLevel}.");
-            return true;
         }
-        return false;
+    }
+
+    public void SpendCoins(int amount)
+    {
+        currentCoins -= amount;
+        OnCurrencyChanged?.Invoke();
+    }
+
+    public void EarnCoins(int amount)
+    {
+        currentCoins += amount;
+        OnCurrencyChanged?.Invoke();
+    }
+
+    public void SpendSouls(int amount)
+    {
+        currentSouls -= amount;
+        OnCurrencyChanged?.Invoke();
+    }
+
+    public void EarnSouls(int amount)
+    {
+        currentSouls += amount;
+        OnCurrencyChanged?.Invoke();
     }
 
     public List<RuntimeStat> GetAllRuntimeStatsFromCategory(StatCategory category)
