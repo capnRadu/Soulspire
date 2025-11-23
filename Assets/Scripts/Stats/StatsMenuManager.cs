@@ -6,21 +6,13 @@ public class StatsMenuManager : MonoBehaviour
     [SerializeField] private bool isHub;
     [SerializeField] private StatCategory focusedStatsCategory;
 
-    private void OnEnable()
+    private void Start()
     {
         foreach (var stat in StatsManager.Instance.GetAllRuntimeStatsFromCategory(focusedStatsCategory))
         {
             GameObject statSlotObj = Instantiate(statSlotPrefab, transform);
             StatSlot statSlot = statSlotObj.GetComponent<StatSlot>();
             statSlot.Initialize(stat, isHub);
-        }
-    }
-
-    private void OnDisable()
-    {
-        foreach (Transform child in transform)
-        {
-            Destroy(child.gameObject);
         }
     }
 }
