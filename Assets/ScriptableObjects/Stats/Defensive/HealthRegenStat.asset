@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a06df369c1c62f4d8ffa611d146dfdb, type: 3}
-  m_Name: DamageStat
+  m_Name: HealthRegenStat
   m_EditorClassIdentifier: Assembly-CSharp::StatDefinition
-  statName: Damage
+  statName: Health Regen
   type: 1
-  category: 0
-  baseValue: 5
-  valuePerLevel: 3
-  baseCoinCost: 4
-  baseSoulCost: 12
-  costMultiplier: 1.1
+  category: 1
+  baseValue: 0
+  valuePerLevel: 0.5
+  baseCoinCost: 8
+  baseSoulCost: 32
+  costMultiplier: 1.5

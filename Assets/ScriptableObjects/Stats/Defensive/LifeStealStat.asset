@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a06df369c1c62f4d8ffa611d146dfdb, type: 3}
-  m_Name: HealthStat
+  m_Name: LifeStealStat
   m_EditorClassIdentifier: Assembly-CSharp::StatDefinition
-  statName: Health
-  type: 0
+  statName: Life Steal
+  type: 4
   category: 1
-  baseValue: 10
-  valuePerLevel: 2
-  baseCoinCost: 2
-  baseSoulCost: 10
-  costMultiplier: 1.1
+  baseValue: 0
+  valuePerLevel: 1
+  baseCoinCost: 15
+  baseSoulCost: 47
+  costMultiplier: 1.6

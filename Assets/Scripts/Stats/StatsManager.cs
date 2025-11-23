@@ -5,7 +5,16 @@ using UnityEngine;
 public enum StatType
 {
     Health,
-    Damage
+    HealthRegeneration,
+    DamageReduction,
+    DodgeChance,
+    LifeSteal,
+    HealOnKill,
+    Damage,
+    AttackSpeed,
+    CriticalChance,
+    DamagePerMeter,
+    Range
 }
 
 public enum StatCategory
