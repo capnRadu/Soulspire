@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,13 +8,15 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private Slider slider;
     [SerializeField] private Gradient gradient;
     [SerializeField] private Image fill;
-
+    [SerializeField] private TextMeshProUGUI healthText;
+ 
     private Coroutine updateCoroutine;
 
     public void SetMaxHealth(float health)
     {
         slider.maxValue = health;
         slider.value = health;
+        healthText.text = $"{health}";
 
         fill.color = gradient.Evaluate(1f);
     }
@@ -25,6 +28,7 @@ public class HealthBar : MonoBehaviour
             StopCoroutine(updateCoroutine);
         }
 
+        healthText.text = $"{health}";
         updateCoroutine = StartCoroutine(AnimateHealth(health));
     }
 
