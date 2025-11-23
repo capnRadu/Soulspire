@@ -21,6 +21,7 @@ public class Health : MonoBehaviour
         {
             // Health Stat
             maxHealth = StatsManager.Instance.GetStatValue(StatType.Health);
+            StatsManager.Instance.OnStatUpgraded += HandleStatUpgrade;
         }
 
         currentHealth = maxHealth;
@@ -28,6 +29,7 @@ public class Health : MonoBehaviour
         if (healthBar != null)
         {
             healthBar.SetMaxHealth(maxHealth);
+            healthBar.SetHealth(currentHealth);
         }
     }
 
@@ -57,6 +59,24 @@ public class Health : MonoBehaviour
         if (healthBar != null)
         {
             healthBar.SetHealth(currentHealth);
+        }
+    }
+
+    private void HandleStatUpgrade(StatType type)
+    {
+        if (type == StatType.Health)
+        {
+            float newMaxHealth = StatsManager.Instance.GetStatValue(StatType.Health);
+            float healthGain = newMaxHealth - maxHealth;
+
+            maxHealth = newMaxHealth;
+            currentHealth += healthGain;
+
+            if (healthBar != null)
+            {
+                healthBar.SetMaxHealth(maxHealth);
+                healthBar.SetHealth(currentHealth);
+            }
         }
     }
 

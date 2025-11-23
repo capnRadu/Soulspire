@@ -15,20 +15,18 @@ public class HealthBar : MonoBehaviour
     public void SetMaxHealth(float health)
     {
         slider.maxValue = health;
-        slider.value = health;
-        healthText.text = $"{health}";
-
-        fill.color = gradient.Evaluate(1f);
+        fill.color = gradient.Evaluate(slider.normalizedValue);
     }
 
     public void SetHealth(float health)
     {
+        healthText.text = $"{Mathf.CeilToInt(health)}";
+
         if (updateCoroutine != null)
         {
             StopCoroutine(updateCoroutine);
         }
 
-        healthText.text = $"{health}";
         updateCoroutine = StartCoroutine(AnimateHealth(health));
     }
 
