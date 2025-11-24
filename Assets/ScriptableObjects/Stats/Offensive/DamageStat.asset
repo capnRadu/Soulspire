@@ -15,6 +15,7 @@ MonoBehaviour:
   statName: Damage
   type: 6
   category: 0
+  unlockLevel: 2
   baseValue: 10
   valuePerLevel: 2
   baseCoinCost: 8

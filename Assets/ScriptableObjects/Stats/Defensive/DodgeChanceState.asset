@@ -15,6 +15,7 @@ MonoBehaviour:
   statName: Dodge Chance
   type: 3
   category: 1
+  unlockLevel: 9
   baseValue: 1
   valuePerLevel: 1
   baseCoinCost: 6

@@ -1742,14 +1742,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: dfd6395bd63af9f468e1a7f6b874938d, type: 2}
   - {fileID: 11400000, guid: f03996ac78f3906448d31b0d9adc8d1e, type: 2}
   - {fileID: 11400000, guid: 47f2b18a6227f324094abba2fe0611f2, type: 2}
+  - {fileID: 11400000, guid: ea590fb872b93a14d84b7f7153dc492b, type: 2}
   - {fileID: 11400000, guid: dabe2c39faca0b8468182150187da4c9, type: 2}
   - {fileID: 11400000, guid: 60f7c6c0bfc35d9459f18f77b3675beb, type: 2}
-  - {fileID: 11400000, guid: ea590fb872b93a14d84b7f7153dc492b, type: 2}
   - {fileID: 11400000, guid: 9a4a6c2855a79f04b86fca68d6376b26, type: 2}
+  - {fileID: 11400000, guid: 8d37d31b6e3d97c44ad8953b0f599fcd, type: 2}
   - {fileID: 11400000, guid: 077677ac0d0ec364f9ac0575430e4090, type: 2}
   - {fileID: 11400000, guid: 85daf48dfab13cd40b7ddb5794c92be7, type: 2}
   - {fileID: 11400000, guid: 39dd095d3994f6845b28d0c019eeda95, type: 2}
-  - {fileID: 11400000, guid: 8d37d31b6e3d97c44ad8953b0f599fcd, type: 2}
   runtimeStatsDebug: []
   currentCoins: 1000
   currentSouls: 1000

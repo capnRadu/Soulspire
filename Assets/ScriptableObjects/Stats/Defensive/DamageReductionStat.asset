@@ -15,6 +15,7 @@ MonoBehaviour:
   statName: Damage Reduction
   type: 2
   category: 1
+  unlockLevel: 6
   baseValue: 0
   valuePerLevel: 2
   baseCoinCost: 10

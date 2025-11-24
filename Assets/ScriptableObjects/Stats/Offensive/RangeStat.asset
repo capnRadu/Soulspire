@@ -15,6 +15,7 @@ MonoBehaviour:
   statName: Range
   type: 10
   category: 0
+  unlockLevel: 2
   baseValue: 12
   valuePerLevel: 1
   baseCoinCost: 18

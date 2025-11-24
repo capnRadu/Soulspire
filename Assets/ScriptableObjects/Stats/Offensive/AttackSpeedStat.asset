@@ -15,6 +15,7 @@ MonoBehaviour:
   statName: Attack Speed
   type: 7
   category: 0
+  unlockLevel: 3
   baseValue: 1
   valuePerLevel: 0.1
   baseCoinCost: 10

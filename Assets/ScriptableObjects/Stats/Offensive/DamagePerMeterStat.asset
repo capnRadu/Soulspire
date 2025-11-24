@@ -15,6 +15,7 @@ MonoBehaviour:
   statName: Damage Per Meter
   type: 9
   category: 0
+  unlockLevel: 8
   baseValue: 0
   valuePerLevel: 5
   baseCoinCost: 17

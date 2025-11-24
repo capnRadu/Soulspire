@@ -11,18 +11,22 @@ public class StatSlot : MonoBehaviour
     [SerializeField] private TextMeshProUGUI value;
     [SerializeField] private Button upgradeButton;
     [SerializeField] private TextMeshProUGUI cost;
+    [SerializeField] private GameObject lockedPanel;
+    [SerializeField] private TextMeshProUGUI locked;
 
     private bool isHubMode;
 
     private void OnEnable()
     {
         StatsManager.Instance.OnCurrencyChanged += UpdateUI;
+        StatsManager.Instance.OnLevelUp += UpdateUI;
         UpdateUI();
     }
 
     private void OnDisable()
     {
         StatsManager.Instance.OnCurrencyChanged -= UpdateUI;
+        StatsManager.Instance.OnLevelUp -= UpdateUI;
     }
 
     public void Initialize(RuntimeStat stat, bool hubMode)
@@ -41,6 +45,30 @@ public class StatSlot : MonoBehaviour
         int totalLevel = runtimeStat.permanentLevel + runtimeStat.runLevel;
         level.text = $"Lvl {totalLevel}";
         value.text = $"{runtimeStat.GetValue()}";
+
+        int reqLevel = runtimeStat.definition.unlockLevel;
+        int playerLevel = StatsManager.Instance.CurrentLevel;
+        bool isLocked = playerLevel < reqLevel;
+
+        if (isLocked)
+        {
+            locked.text = $"Unlocks at Lvl {reqLevel}";
+            upgradeButton.interactable = false;
+
+            if (lockedPanel != null)
+            {
+                lockedPanel.SetActive(true);
+            }
+
+            return;
+        }
+        else
+        {
+            if (lockedPanel != null)
+            {
+                lockedPanel.SetActive(false);
+            }
+        }
 
         int costAmount = 0;
         bool canAfford = false;

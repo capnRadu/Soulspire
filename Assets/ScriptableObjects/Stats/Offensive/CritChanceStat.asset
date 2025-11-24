@@ -15,6 +15,7 @@ MonoBehaviour:
   statName: Critical Chance
   type: 8
   category: 0
+  unlockLevel: 5
   baseValue: 0
   valuePerLevel: 2
   baseCoinCost: 6

@@ -15,6 +15,7 @@ MonoBehaviour:
   statName: Heal On Kill
   type: 5
   category: 1
+  unlockLevel: 7
   baseValue: 0
   valuePerLevel: 2
   baseCoinCost: 13

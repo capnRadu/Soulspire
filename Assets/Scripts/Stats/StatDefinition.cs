@@ -6,6 +6,7 @@ public class StatDefinition : ScriptableObject
     public string statName;
     public StatType type;
     public StatCategory category;
+    public int unlockLevel;
 
     public float baseValue;
     public float valuePerLevel;
