@@ -17,6 +17,7 @@ public class StatSlot : MonoBehaviour
     private void OnEnable()
     {
         StatsManager.Instance.OnCurrencyChanged += UpdateUI;
+        UpdateUI();
     }
 
     private void OnDisable()
