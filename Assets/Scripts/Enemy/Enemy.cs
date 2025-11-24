@@ -20,6 +20,10 @@ public class Enemy : MonoBehaviour
 
     private int coinsOnDeath = 5;
     public int CoinsOnDeath => coinsOnDeath;
+    private int soulsOnDeath = 1;
+    public int SoulsOnDeath => soulsOnDeath;
+    private float experienceOnDeath = 30f;
+    public float ExperienceOnDeath => experienceOnDeath;
 
     private void Awake()
     {

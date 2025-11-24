@@ -27,6 +27,8 @@ public class EnemyDeathAction : MonoBehaviour
     private void HandleDeath()
     {
         StatsManager.Instance.EarnCoins(enemy.CoinsOnDeath);
+        StatsManager.Instance.EarnSouls(enemy.SoulsOnDeath);
+        StatsManager.Instance.EarnXP(enemy.ExperienceOnDeath);
 
         if (animator != null)
         {

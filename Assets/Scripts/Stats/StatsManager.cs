@@ -61,8 +61,18 @@ public class StatsManager : MonoBehaviour
     [SerializeField] private int currentSouls;
     public int CurrentSouls => currentSouls;
 
+    private int currentLevel = 1;
+    public int CurrentLevel => currentLevel;
+    private float currentXP = 0;
+    public float CurrentXP => currentXP;
+    private float baseXPReq = 100f; 
+    private float xpMultiplier = 1.25f;
+    public float RequiredXP => CalculateRequiredXP();
+
     public event Action OnCurrencyChanged;
     public event Action<StatType> OnStatUpgraded;
+    public event Action OnXPChange;
+    public event Action OnLevelUp;
 
     private void Awake()
     {
@@ -154,6 +164,34 @@ public class StatsManager : MonoBehaviour
     {
         currentSouls += amount;
         OnCurrencyChanged?.Invoke();
+    }
+
+    public void EarnXP(float amount)
+    {
+        currentXP += amount;
+        CheckForLevelUp();
+        OnXPChange?.Invoke();
+    }
+
+    private void CheckForLevelUp()
+    {
+        float required = CalculateRequiredXP();
+
+        while (currentXP >= required)
+        {
+            currentXP -= required;
+            currentLevel++;
+
+            Debug.Log($"LEVEL UP! Player is now Level {currentLevel}");
+            OnLevelUp?.Invoke();
+
+            required = CalculateRequiredXP();
+        }
+    }
+
+    private float CalculateRequiredXP()
+    {
+        return baseXPReq * Mathf.Pow(xpMultiplier, currentLevel - 1);
     }
 
     public List<RuntimeStat> GetAllRuntimeStatsFromCategory(StatCategory category)
