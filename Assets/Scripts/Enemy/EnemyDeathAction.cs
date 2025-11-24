@@ -7,6 +7,9 @@ public class EnemyDeathAction : MonoBehaviour
     private Enemy enemy;
     private Animator animator;
 
+    [SerializeField] private GameObject rewardsPrefab;
+    [SerializeField] private Transform rewardsSpawnPoint;
+
     private void Awake()
     {
         health = GetComponent<Health>();
@@ -29,6 +32,10 @@ public class EnemyDeathAction : MonoBehaviour
         StatsManager.Instance.EarnCoins(enemy.CoinsOnDeath);
         StatsManager.Instance.EarnSouls(enemy.SoulsOnDeath);
         StatsManager.Instance.EarnXP(enemy.ExperienceOnDeath);
+
+        GameObject rewardsUI = Instantiate(rewardsPrefab, rewardsSpawnPoint.position, Quaternion.identity);
+        RewardsUI rewardsUIScript = rewardsUI.GetComponent<RewardsUI>();
+        rewardsUIScript.Initialize(enemy.CoinsOnDeath, enemy.SoulsOnDeath, enemy.ExperienceOnDeath);
 
         if (animator != null)
         {

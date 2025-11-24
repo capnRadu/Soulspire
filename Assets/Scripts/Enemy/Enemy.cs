@@ -25,6 +25,7 @@ public class Enemy : MonoBehaviour
     private float experienceOnDeath = 15f;
     public float ExperienceOnDeath => experienceOnDeath;
 
+
     private void Awake()
     {
         tower = GameObject.FindGameObjectWithTag("Tower").transform;
