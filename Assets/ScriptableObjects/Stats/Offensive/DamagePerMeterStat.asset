@@ -16,8 +16,9 @@ MonoBehaviour:
   type: 9
   category: 0
   unlockLevel: 8
+  maxLevel: 20
   baseValue: 0
-  valuePerLevel: 5
+  valuePerLevel: 2
   baseCoinCost: 17
   baseSoulCost: 44
   costMultiplier: 1.3

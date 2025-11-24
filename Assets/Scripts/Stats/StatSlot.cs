@@ -46,6 +46,19 @@ public class StatSlot : MonoBehaviour
         level.text = $"Lvl {totalLevel}";
         value.text = $"{runtimeStat.GetValue()}";
 
+        if (runtimeStat.IsMaxedOut())
+        {
+            cost.text = "Max";
+            upgradeButton.interactable = false;
+
+            if (lockedPanel != null)
+            {
+                lockedPanel.SetActive(false);
+            }
+
+            return;
+        }
+
         int reqLevel = runtimeStat.definition.unlockLevel;
         int playerLevel = StatsManager.Instance.CurrentLevel;
         bool isLocked = playerLevel < reqLevel;

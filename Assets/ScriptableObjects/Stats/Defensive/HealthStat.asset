@@ -16,6 +16,7 @@ MonoBehaviour:
   type: 0
   category: 1
   unlockLevel: 1
+  maxLevel: 50
   baseValue: 100
   valuePerLevel: 12
   baseCoinCost: 10

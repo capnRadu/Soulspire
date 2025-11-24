@@ -45,6 +45,12 @@ public class RuntimeStat
     {
         return definition.GetCost(permanentLevel, definition.baseSoulCost);
     }
+
+    public bool IsMaxedOut()
+    {
+        int totalLevel = permanentLevel + runLevel;
+        return totalLevel >= definition.maxLevel;
+    }
 }
 
 public class StatsManager : MonoBehaviour
@@ -116,6 +122,13 @@ public class StatsManager : MonoBehaviour
     public void UpgradeRunStat(StatType type)
     {
         RuntimeStat stat = stats[type];
+
+        if (stat.IsMaxedOut())
+        {
+            Debug.Log($"{type} is already at Max Level!");
+            return;
+        }
+
         int cost = stat.GetCoinCost();
 
         if (currentCoins >= cost)
@@ -131,6 +144,13 @@ public class StatsManager : MonoBehaviour
     public void UpgradePermanentStat(StatType type)
     {
         RuntimeStat stat = stats[type];
+
+        if (stat.IsMaxedOut())
+        {
+            Debug.Log($"{type} is already at Max Level!");
+            return;
+        }
+
         int cost = stat.GetSoulCost();
 
         if (currentSouls >= cost)
