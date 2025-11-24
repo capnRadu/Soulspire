@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] private AnimationClip castAnimation;
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform firePoint;
+    private Enemy currentTarget;
     public float DetectionRadius => StatsManager.Instance.GetStatValue(StatType.Range);
 
     private float rotationSpeed = 720f;
@@ -19,16 +20,44 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    private void Start()
+    {
+        StatsManager.Instance.OnStatUpgraded += HandleStatUpgrade;
+        HandleStatUpgrade(StatType.AttackSpeed);
+    }
+
+    private void OnDisable()
+    {
+        StatsManager.Instance.OnStatUpgraded -= HandleStatUpgrade;
+    }
+
+    private void HandleStatUpgrade(StatType statType)
+    {
+        if (statType == StatType.AttackSpeed)
+        {
+            // Attack Speed Stat
+            float baseCooldown = castAnimation.length;
+            float attackSpeedStat = StatsManager.Instance.GetStatValue(StatType.AttackSpeed);
+            float calculatedCooldown = baseCooldown / attackSpeedStat;
+            animator.SetFloat("castSpeedMultiplier", baseCooldown / calculatedCooldown);
+        }
+    }
+
     private void Update()
     {
-        Enemy target = GetClosestEnemy();
-        if (target == null) return;
+        currentTarget = GetClosestEnemy();
 
-        RotateTowardsTarget(target);
+        if (currentTarget == null)
+        {
+            animator.ResetTrigger("cast");
+            return;
+        }
+
+        RotateTowardsTarget(currentTarget);
 
         if (!isOnCooldown)
         {
-            StartCoroutine(ShootCooldown(target));
+            StartCoroutine(ShootCooldown());
         }
     }
 
@@ -45,7 +74,7 @@ public class Player : MonoBehaviour
 
         foreach (var e in enemies)
         {
-            if (e.enabled == false) continue;
+            if (e.enabled == false || e.GetComponent<Health>().IsDead) continue;
 
             float dist = Vector3.Distance(transform.position, e.transform.position);
 
@@ -68,29 +97,24 @@ public class Player : MonoBehaviour
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, step);
     }
 
-    private IEnumerator ShootCooldown(Enemy target)
+    private IEnumerator ShootCooldown()
     {
         isOnCooldown = true;
         animator.SetTrigger("cast");
+        float cooldown = castAnimation.length / animator.GetFloat("castSpeedMultiplier");
 
-        // animator.speed = StatsManager.Instance.GetStatValue(StatType.AttackSpeed);
-
-        yield return new WaitForSeconds(0.7f);
-
-        Shoot(target.gameObject);
-
-        // Attack Speed Stat
-        float baseCooldown = castAnimation.length;
-        float attackSpeedStat = StatsManager.Instance.GetStatValue(StatType.AttackSpeed);
-        float calculatedCooldown = baseCooldown / attackSpeedStat;
-
-        yield return new WaitForSeconds(Mathf.Max(calculatedCooldown, 0.1f));
+        yield return new WaitForSeconds(Mathf.Max(cooldown, 0.1f));
 
         isOnCooldown = false;
     }
 
-    private void Shoot(GameObject target)
+    public void Shoot()
     {
+        if (currentTarget == null || currentTarget.GetComponent<Health>().IsDead)
+        {
+            return;
+        }
+
         GameObject proj = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
         FireballProjectile projectile = proj.GetComponent<FireballProjectile>();
 
@@ -100,6 +124,6 @@ public class Player : MonoBehaviour
         float lifeSteal = StatsManager.Instance.GetStatValue(StatType.LifeSteal);
         float healOnKill = StatsManager.Instance.GetStatValue(StatType.HealOnKill);
 
-        projectile.Initialize(target.transform, towerHealth, damage, critChance, dmgPerMeter, lifeSteal, healOnKill);
+        projectile.Initialize(currentTarget.transform, towerHealth, damage, critChance, dmgPerMeter, lifeSteal, healOnKill);
     }
 }
