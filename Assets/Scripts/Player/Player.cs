@@ -26,7 +26,6 @@ public class Player : MonoBehaviour
 
         RotateTowardsTarget(target);
 
-        // float cooldownDuration = 1f / castAnimation.length;
         if (!isOnCooldown)
         {
             StartCoroutine(ShootCooldown(target));
