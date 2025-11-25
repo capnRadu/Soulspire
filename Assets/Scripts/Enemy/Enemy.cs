@@ -3,28 +3,28 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    private Transform tower;
-    private Health towerHealth;
-    private Animator animator;
-    [SerializeField] private AnimationClip spawnAnimation;
-    private float spawnAnimationDuration => spawnAnimation.length;
-    [SerializeField] private AnimationClip attackAnimation;
+    protected Transform tower;
+    protected Health towerHealth;
+    protected Animator animator;
+    [SerializeField] protected AnimationClip spawnAnimation;
+    protected float spawnAnimationDuration => spawnAnimation.length;
+    [SerializeField] protected AnimationClip attackAnimation;
 
-    private float speed = 6f;
-    private float minimumDistanceToTower = 4f;
-    private float attackRate => attackAnimation.length;
-    private float nextAttackTime = 0f;
-    private int attackDamage = 2;
+    [SerializeField] protected float speed = 6f;
+    [SerializeField] protected float minimumDistanceToTower = 4f;
+    [SerializeField] protected float attackCooldown = 0.5f;
+    protected float attackRate => attackAnimation.length + attackCooldown;
+    protected float nextAttackTime = 0f;
+    [SerializeField] protected int attackDamage = 2;
 
-    private float yPos;
+    protected float yPos;
 
-    private int coinsOnDeath = 5;
+    [SerializeField] protected int coinsOnDeath = 5;
     public int CoinsOnDeath => coinsOnDeath;
-    private int soulsOnDeath = 1;
+    [SerializeField] protected int soulsOnDeath = 1;
     public int SoulsOnDeath => soulsOnDeath;
-    private float experienceOnDeath = 15f;
+    [SerializeField] protected float experienceOnDeath = 15f;
     public float ExperienceOnDeath => experienceOnDeath;
-
 
     private void Awake()
     {
@@ -88,15 +88,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void Attack()
+    public virtual void Attack()
     {
-        if (towerHealth != null)
-        {
-            towerHealth.TakeDamage(attackDamage);
-        }
-        else
-        {
-            Debug.LogWarning("Tower health script not found!");
-        }
     }
 }

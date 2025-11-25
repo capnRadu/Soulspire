@@ -2289,7 +2289,7 @@ GameObject:
   - component: {fileID: 2573241025226366008}
   - component: {fileID: 5330490298265342869}
   - component: {fileID: 596824593821567457}
-  - component: {fileID: 3356474218222844914}
+  - component: {fileID: 2960569410920298032}
   - component: {fileID: 3683035648011658481}
   - component: {fileID: 6122868991025087776}
   m_Layer: 0
@@ -2365,7 +2365,7 @@ CapsuleCollider:
   m_Height: 1.77
   m_Direction: 1
   m_Center: {x: 0, y: 0.87, z: 0}
---- !u!114 &3356474218222844914
+--- !u!114 &2960569410920298032
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2374,11 +2374,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 6680940179413830124}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a70eba4f8a7d1be47909f783d2f66561, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c6db681088bf0547bae0e04348547e1, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Skeleton
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyMelee
   spawnAnimation: {fileID: 4693701861171597979, guid: 4e39d77ee1de8bf44b8fa7f887032cbc, type: 3}
   attackAnimation: {fileID: 7400000, guid: 3e17e0232f266574c894811321db5fdb, type: 2}
+  speed: 6
+  minimumDistanceToTower: 4
+  attackCooldown: 0.5
+  attackDamage: 2
+  coinsOnDeath: 5
+  soulsOnDeath: 1
+  experienceOnDeath: 15
 --- !u!114 &3683035648011658481
 MonoBehaviour:
   m_ObjectHideFlags: 0
