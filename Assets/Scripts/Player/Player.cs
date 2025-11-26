@@ -63,25 +63,27 @@ public class Player : MonoBehaviour
 
     private Enemy GetClosestEnemy()
     {
-        Enemy[] enemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
+        int layerMask = LayerMask.GetMask("Enemy");
 
-        if (enemies.Length == 0) return null;
+        Collider[] hits = Physics.OverlapSphere(transform.position, DetectionRadius, layerMask);
+
+        if (hits.Length == 0) return null;
 
         Enemy closest = null;
         float minDist = Mathf.Infinity;
 
-        float currentRange = DetectionRadius;
-
-        foreach (var e in enemies)
+        foreach (var hit in hits)
         {
-            if (e.enabled == false || e.GetComponent<Health>().IsDead) continue;
-
-            float dist = Vector3.Distance(transform.position, e.transform.position);
-
-            if (dist < minDist && dist <= currentRange)
+            if (hit.TryGetComponent<Enemy>(out Enemy enemy))
             {
-                minDist = dist;
-                closest = e;
+                if (enemy.enabled == false || enemy.GetComponent<Health>().IsDead) continue;
+
+                float dist = Vector3.Distance(transform.position, enemy.transform.position);
+                if (dist < minDist)
+                {
+                    minDist = dist;
+                    closest = enemy;
+                }
             }
         }
 

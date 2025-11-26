@@ -78,7 +78,7 @@ GameObject:
   - component: {fileID: 2803993279056736574}
   - component: {fileID: 7513075924648787169}
   - component: {fileID: 6365751564559345346}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Lich
   m_TagString: Untagged
   m_Icon: {fileID: 0}

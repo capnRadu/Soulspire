@@ -1971,7 +1971,7 @@ GameObject:
   - component: {fileID: 7195884953393876253}
   - component: {fileID: 1348087518950266081}
   - component: {fileID: 25768728371638043}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Minotaur
   m_TagString: Untagged
   m_Icon: {fileID: 0}
