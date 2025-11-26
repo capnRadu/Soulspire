@@ -2377,6 +2377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c6db681088bf0547bae0e04348547e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMelee
+  health: {fileID: 3683035648011658481}
   spawnAnimation: {fileID: 4693701861171597979, guid: 4e39d77ee1de8bf44b8fa7f887032cbc, type: 3}
   attackAnimation: {fileID: 7400000, guid: 3e17e0232f266574c894811321db5fdb, type: 2}
   speed: 6

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b569164e9b2a8b145b29198356ba60f3, type: 3}
+  m_Name: Wave10
+  m_EditorClassIdentifier: Assembly-CSharp::WaveSettings
+  duration: 25
+  minSpawnInterval: 2
+  maxSpawnInterval: 5
+  healthMultiplier: 1.4
+  damageMultiplier: 1.4
+  enemies:
+  - prefab: {fileID: 6680940179413830124, guid: 3f3b9ea2168232c47bd70a5456e1822e, type: 3}
+    spawnChance: 0.1
+  - prefab: {fileID: 235509995668956268, guid: 303711e538b35574d9738295b556491d, type: 3}
+    spawnChance: 0.4
+  - prefab: {fileID: 4410413259890477402, guid: a414c82d29d43d549a3ac1d38598f6e0, type: 3}
+    spawnChance: 0.5

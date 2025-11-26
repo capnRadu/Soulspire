@@ -62,6 +62,18 @@ public class Health : MonoBehaviour
         }
     }
 
+    public void Buff(float multiplier) 
+    {
+        maxHealth *= multiplier;
+        currentHealth *= multiplier;
+
+        if (healthBar != null)
+        {
+            healthBar.SetMaxHealth(maxHealth);
+            healthBar.SetHealth(currentHealth);
+        }
+    }
+
     private void HandleStatUpgrade(StatType type)
     {
         if (type == StatType.Health)

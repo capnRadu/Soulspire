@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
     protected Transform tower;
     protected Health towerHealth;
     protected Animator animator;
+    [SerializeField] protected Health health;
     [SerializeField] protected AnimationClip spawnAnimation;
     protected float spawnAnimationDuration => spawnAnimation.length;
     [SerializeField] protected AnimationClip attackAnimation;
@@ -25,6 +26,12 @@ public class Enemy : MonoBehaviour
     public int SoulsOnDeath => soulsOnDeath;
     [SerializeField] protected float experienceOnDeath = 15f;
     public float ExperienceOnDeath => experienceOnDeath;
+
+    public void ApplyDifficultyBuffs(float hpMultiplier, float dmgMultiplier)
+    {
+        attackDamage = Mathf.RoundToInt(attackDamage * dmgMultiplier);
+        health.Buff(hpMultiplier);
+    }
 
     private void Awake()
     {
