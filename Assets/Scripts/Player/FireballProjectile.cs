@@ -77,7 +77,7 @@ public class FireballProjectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.TryGetComponent<Health>(out Health enemyHealth))
+        if (collision.gameObject.TryGetComponent<Health>(out Health enemyHealth) && collision.gameObject != towerHealth.gameObject)
         {
             // Damage Per Meter Stat
             float distanceTraveled = Vector3.Distance(startPos, transform.position);

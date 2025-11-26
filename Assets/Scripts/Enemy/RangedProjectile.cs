@@ -65,7 +65,7 @@ public class RangedProjectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.TryGetComponent<Health>(out Health otherHealth))
+        if (collision.gameObject.TryGetComponent<Health>(out Health otherHealth) && collision.gameObject != this)
         {
             otherHealth.TakeDamage(damage);
             Arrive(true);
