@@ -98,6 +98,7 @@ public class WaveManager : MonoBehaviour
 
         if (enemyScript != null)
         {
+            enemyScript.Initialize(tower);
             enemyScript.ApplyDifficultyBuffs(settings.healthMultiplier, settings.damageMultiplier);
         }
     }

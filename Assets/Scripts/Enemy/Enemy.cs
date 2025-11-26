@@ -27,6 +27,16 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float experienceOnDeath = 15f;
     public float ExperienceOnDeath => experienceOnDeath;
 
+    public void Initialize(Transform towerTransform)
+    {
+        tower = towerTransform;
+
+        if (tower != null)
+        {
+            towerHealth = tower.GetComponent<Health>();
+        }
+    }
+
     public void ApplyDifficultyBuffs(float hpMultiplier, float dmgMultiplier)
     {
         attackDamage = Mathf.RoundToInt(attackDamage * dmgMultiplier);
@@ -35,14 +45,8 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
-        tower = GameObject.FindGameObjectWithTag("Tower").transform;
         animator = GetComponent<Animator>();
         yPos = transform.position.y;
-
-        if (tower != null)
-        {
-            towerHealth = tower.GetComponent<Health>();
-        }
 
         enabled = false;
         StartCoroutine(EnableAfterSpawn());
