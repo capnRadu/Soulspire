@@ -75,6 +75,16 @@ public class StatsManager : MonoBehaviour
     private float xpMultiplier = 1.25f;
     public float RequiredXP => CalculateRequiredXP();
 
+    private int startOfRunLevel;
+    public int StartOfRunLevel => startOfRunLevel;
+    private int soulsCollectedInRun;
+    public int SoulsCollectedInRun => soulsCollectedInRun;
+    private int coinsCollectedInRun;
+    public int CoinsCollectedInRun => coinsCollectedInRun;
+    private float xpCollectedInRun;
+    public float XPCollectedInRun => xpCollectedInRun;
+    [SerializeField] private int soulsRewardPerLevelUp = 10;
+
     public event Action OnCurrencyChanged;
     public event Action<StatType> OnStatUpgraded;
     public event Action OnXPChange;
@@ -171,6 +181,7 @@ public class StatsManager : MonoBehaviour
     public void EarnCoins(int amount)
     {
         currentCoins += amount;
+        coinsCollectedInRun += amount;
         OnCurrencyChanged?.Invoke();
     }
 
@@ -183,12 +194,14 @@ public class StatsManager : MonoBehaviour
     public void EarnSouls(int amount)
     {
         currentSouls += amount;
+        soulsCollectedInRun += amount;
         OnCurrencyChanged?.Invoke();
     }
 
     public void EarnXP(float amount)
     {
         currentXP += amount;
+        xpCollectedInRun += amount;
         CheckForLevelUp();
         OnXPChange?.Invoke();
     }
@@ -214,6 +227,7 @@ public class StatsManager : MonoBehaviour
         return baseXPReq * Mathf.Pow(xpMultiplier, currentLevel - 1);
     }
 
+
     public List<RuntimeStat> GetAllRuntimeStatsFromCategory(StatCategory category)
     {
         List<RuntimeStat> filteredStats = new List<RuntimeStat>();
@@ -227,6 +241,26 @@ public class StatsManager : MonoBehaviour
         }
 
         return filteredStats;
+    }
+
+    public void StartNewRun()
+    {
+        startOfRunLevel = currentLevel;
+        soulsCollectedInRun = 0;
+        coinsCollectedInRun = 0;
+        xpCollectedInRun = 0;
+    }
+
+    public int CalculateLevelUpBonus()
+    {
+        int levelsGained = currentLevel - startOfRunLevel;
+
+        if (levelsGained <= 0)
+        {
+            return 0;
+        }
+
+        return levelsGained * soulsRewardPerLevelUp * currentLevel;
     }
 
     public void OnRunEnded()

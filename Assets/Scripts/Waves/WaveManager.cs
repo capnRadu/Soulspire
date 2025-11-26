@@ -28,6 +28,8 @@ public class WaveManager : MonoBehaviour
 
     private void Start()
     {
+        StatsManager.Instance.StartNewRun();
+
         if (waves.Count > 0)
         {
             StartNextWave();
