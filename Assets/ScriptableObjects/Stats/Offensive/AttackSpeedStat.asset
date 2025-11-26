@@ -16,6 +16,7 @@ MonoBehaviour:
   type: 7
   category: 0
   unlockLevel: 3
+  sigilsPurchaseCost: 1
   maxLevel: 20
   baseValue: 1
   valuePerLevel: 0.1

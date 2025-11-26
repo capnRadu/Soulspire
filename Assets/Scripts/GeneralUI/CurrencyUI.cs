@@ -7,6 +7,7 @@ public class CurrencyUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI coinsText;
     [SerializeField] private TextMeshProUGUI soulsText;
+    [SerializeField] private TextMeshProUGUI sigilsText;
 
     [SerializeField] private Slider xpSlider;
     [SerializeField] private TextMeshProUGUI levelText;
@@ -36,6 +37,7 @@ public class CurrencyUI : MonoBehaviour
     {
         coinsText.text = StatsManager.Instance.CurrentCoins.ToString();
         soulsText.text = StatsManager.Instance.CurrentSouls.ToString();
+        sigilsText.text = StatsManager.Instance.CurrentSigils.ToString();
     }
 
     private void UpdateXPDisplay()

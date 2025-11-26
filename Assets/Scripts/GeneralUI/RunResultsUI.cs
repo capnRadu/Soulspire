@@ -14,6 +14,7 @@ public class RunResultsUI : MonoBehaviour
     [SerializeField] private GameObject levelUpMenu;
     [SerializeField] private TextMeshProUGUI levelUpText;
     [SerializeField] private TextMeshProUGUI bonusSoulsText;
+    [SerializeField] private TextMeshProUGUI sigilsRewardText;
 
     private void OnEnable()
     {
@@ -46,6 +47,7 @@ public class RunResultsUI : MonoBehaviour
 
             levelUpText.text = $"Leveled Up {levelsGained} times!";
             bonusSoulsText.text = $"+{StatsManager.Instance.CalculateLevelUpBonus()} Souls";
+            sigilsRewardText.text = $"+{StatsManager.Instance.CalculateSigilsReward()} Sigils";
         }
         else
         {
@@ -56,6 +58,7 @@ public class RunResultsUI : MonoBehaviour
     public void LevelUpClaim()
     {
         StatsManager.Instance.EarnSouls(StatsManager.Instance.CalculateLevelUpBonus());
+        StatsManager.Instance.EarnSigils(StatsManager.Instance.CalculateSigilsReward());
         GoToHub();
     }
 

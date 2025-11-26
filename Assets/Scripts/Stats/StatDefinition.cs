@@ -7,6 +7,7 @@ public class StatDefinition : ScriptableObject
     public StatType type;
     public StatCategory category;
     public int unlockLevel;
+    public int sigilsPurchaseCost;
     public int maxLevel;
 
     public float baseValue;

@@ -29,6 +29,7 @@ public class RuntimeStat
     public StatDefinition definition;
     public int permanentLevel;
     public int runLevel;
+    public bool isPurchased = false;
 
     public float GetValue()
     {
@@ -51,6 +52,11 @@ public class RuntimeStat
         int totalLevel = permanentLevel + runLevel;
         return totalLevel >= definition.maxLevel;
     }
+
+    public bool IsUnlocked(int playerLevel)
+    {
+        return playerLevel >= definition.unlockLevel;
+    }
 }
 
 public class StatsManager : MonoBehaviour
@@ -66,6 +72,8 @@ public class StatsManager : MonoBehaviour
     public int CurrentCoins => currentCoins;
     [SerializeField] private int currentSouls;
     public int CurrentSouls => currentSouls;
+    [SerializeField] private int currentSigils;
+    public int CurrentSigils => currentSigils;
 
     private int currentLevel = 1;
     public int CurrentLevel => currentLevel;
@@ -198,6 +206,36 @@ public class StatsManager : MonoBehaviour
         OnCurrencyChanged?.Invoke();
     }
 
+    public void PurchaseStat(RuntimeStat stat)
+    {
+        if (stat.isPurchased)
+        {
+            Debug.Log($"{stat.definition.statName} is already purchased.");
+            return;
+        }
+
+        int cost = stat.definition.sigilsPurchaseCost;
+
+        if (currentSigils >= cost)
+        {
+            stat.isPurchased = true;
+            SpendSigils(cost);
+            Debug.Log($"Purchased {stat.definition.statName} for {cost} Sigils.");
+        }
+    }
+
+    public void SpendSigils(int amount)
+    {
+        currentSigils -= amount;
+        OnCurrencyChanged?.Invoke();
+    }
+
+    public void EarnSigils(int amount)
+    {
+        currentSigils += amount;
+        OnCurrencyChanged?.Invoke();
+    }
+
     public void EarnXP(float amount)
     {
         currentXP += amount;
@@ -226,7 +264,6 @@ public class StatsManager : MonoBehaviour
     {
         return baseXPReq * Mathf.Pow(xpMultiplier, currentLevel - 1);
     }
-
 
     public List<RuntimeStat> GetAllRuntimeStatsFromCategory(StatCategory category)
     {
@@ -261,6 +298,18 @@ public class StatsManager : MonoBehaviour
         }
 
         return levelsGained * soulsRewardPerLevelUp * currentLevel;
+    }
+
+    public int CalculateSigilsReward()
+    {
+        int levelsGained = currentLevel - startOfRunLevel;
+
+        if (levelsGained <= 0)
+        {
+            return 0;
+        }
+
+        return levelsGained;
     }
 
     public void OnRunEnded()
