@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     private Animator animator;
 
     [SerializeField] private AnimationClip castAnimation;
+    [SerializeField] private AudioSource castSound;
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform firePoint;
     private Enemy currentTarget;
@@ -116,6 +117,8 @@ public class Player : MonoBehaviour
         {
             return;
         }
+
+        castSound.Play();
 
         GameObject proj = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
         FireballProjectile projectile = proj.GetComponent<FireballProjectile>();

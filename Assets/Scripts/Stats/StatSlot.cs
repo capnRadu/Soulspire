@@ -19,6 +19,9 @@ public class StatSlot : MonoBehaviour
     [SerializeField] private Button purchaseButton;
     [SerializeField] private TextMeshProUGUI purchaseCostText;
 
+    [SerializeField] private AudioSource purchaseSound;
+    [SerializeField] private AudioSource buySound;
+
     private bool isHubMode;
 
     private void OnEnable()
@@ -142,6 +145,8 @@ public class StatSlot : MonoBehaviour
         {
             StatsManager.Instance.UpgradeRunStat(runtimeStat.definition.type);
         }
+
+        buySound.Play();
     }
 
     private void OnPurchaseClicked()
@@ -149,5 +154,6 @@ public class StatSlot : MonoBehaviour
         if (runtimeStat == null) return;
 
         StatsManager.Instance.PurchaseStat(runtimeStat);
+        purchaseSound.Play();
     }
 }

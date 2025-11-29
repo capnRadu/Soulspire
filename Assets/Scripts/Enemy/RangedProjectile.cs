@@ -6,6 +6,7 @@ public class RangedProjectile : MonoBehaviour
     [SerializeField] private float arcHeight = 5.0f;
     [SerializeField] private AnimationCurve speedCurve = AnimationCurve.Linear(0, 0, 1, 1);
     [SerializeField] private GameObject explosionPrefab;
+    [SerializeField] private AudioSource explosionSound;
 
     private Transform target;
     private Vector3 startPos;
@@ -77,6 +78,7 @@ public class RangedProjectile : MonoBehaviour
         if (explosion && explosionPrefab != null)
         {
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            explosionSound.Play();
         }
 
         Destroy(gameObject);
