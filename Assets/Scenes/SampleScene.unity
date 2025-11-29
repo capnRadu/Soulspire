@@ -10364,7 +10364,7 @@ MonoBehaviour:
   timeSlider: {fileID: 1023032585}
   speedText: {fileID: 1617309710}
   minSpeed: 0
-  maxSpeed: 2
+  maxSpeed: 1.5
   defaultSpeed: 1
 --- !u!1 &1400929744
 GameObject:
