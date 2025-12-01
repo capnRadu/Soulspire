@@ -280,6 +280,11 @@ public class StatsManager : MonoBehaviour
         return filteredStats;
     }
 
+    public List<RuntimeStat> GetAllRuntimeStats()
+    {
+        return new List<RuntimeStat>(stats.Values);
+    }
+
     public void StartNewRun()
     {
         startOfRunLevel = currentLevel;
