@@ -11,15 +11,6 @@ public class StatSlot : MonoBehaviour
     [SerializeField] private TextMeshProUGUI value;
     [SerializeField] private Button upgradeButton;
     [SerializeField] private TextMeshProUGUI cost;
-
-    [SerializeField] private GameObject lockedPanel;
-    [SerializeField] private TextMeshProUGUI locked;
-
-    [SerializeField] private GameObject purchasePanel;
-    [SerializeField] private Button purchaseButton;
-    [SerializeField] private TextMeshProUGUI purchaseCostText;
-
-    [SerializeField] private AudioSource purchaseSound;
     [SerializeField] private AudioSource buySound;
 
     private bool isHubMode;
@@ -42,7 +33,6 @@ public class StatSlot : MonoBehaviour
         runtimeStat = stat;
         isHubMode = hubMode;
         upgradeButton.onClick.AddListener(OnUpgradeClicked);
-        purchaseButton.onClick.AddListener(OnPurchaseClicked);
         UpdateUI();
     }
 
@@ -60,56 +50,7 @@ public class StatSlot : MonoBehaviour
             cost.text = "Max";
             upgradeButton.interactable = false;
 
-            if (lockedPanel != null)
-            {
-                lockedPanel.SetActive(false);
-            }
-
             return;
-        }
-
-        if (!runtimeStat.IsUnlocked(StatsManager.Instance.CurrentLevel))
-        {
-            locked.text = $"Unlocks at Lvl {runtimeStat.definition.unlockLevel}";
-            upgradeButton.interactable = false;
-
-            if (lockedPanel != null)
-            {
-                lockedPanel.SetActive(true);
-            }
-
-            return;
-        }
-        else if (!runtimeStat.isPurchased)
-        {
-            if (lockedPanel != null)
-            {
-                lockedPanel.SetActive(false);
-            }
-
-            purchaseCostText.text = $"{runtimeStat.definition.sigilsPurchaseCost}";
-
-            int sigilCost = runtimeStat.definition.sigilsPurchaseCost;
-            bool canAffordPurchase = StatsManager.Instance.CurrentSigils >= sigilCost;
-
-            purchaseButton.interactable = canAffordPurchase;
-
-            if (purchasePanel != null)
-            {
-                purchasePanel.SetActive(true);
-            }
-        }
-        else
-        {
-            if (lockedPanel != null)
-            {
-                lockedPanel.SetActive(false);
-            }
-
-            if (purchasePanel != null)
-            {
-                purchasePanel.SetActive(false);
-            }
         }
 
         int costAmount = 0;
@@ -147,13 +88,5 @@ public class StatSlot : MonoBehaviour
         }
 
         buySound.Play();
-    }
-
-    private void OnPurchaseClicked()
-    {
-        if (runtimeStat == null) return;
-
-        StatsManager.Instance.PurchaseStat(runtimeStat);
-        purchaseSound.Play();
     }
 }
