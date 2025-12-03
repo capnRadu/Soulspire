@@ -89,8 +89,6 @@ public class StatsManager : MonoBehaviour
     public int StartOfRunLevel => startOfRunLevel;
     private int soulsCollectedInRun;
     public int SoulsCollectedInRun => soulsCollectedInRun;
-    private int coinsCollectedInRun;
-    public int CoinsCollectedInRun => coinsCollectedInRun;
     private float xpCollectedInRun;
     public float XPCollectedInRun => xpCollectedInRun;
     [SerializeField] private int soulsRewardPerLevelUp = 10;
@@ -191,7 +189,6 @@ public class StatsManager : MonoBehaviour
     public void EarnCoins(int amount)
     {
         currentCoins += amount;
-        coinsCollectedInRun += amount;
         OnCurrencyChanged?.Invoke();
     }
 
@@ -303,7 +300,6 @@ public class StatsManager : MonoBehaviour
     {
         startOfRunLevel = currentLevel;
         soulsCollectedInRun = 0;
-        coinsCollectedInRun = 0;
         xpCollectedInRun = 0;
     }
 

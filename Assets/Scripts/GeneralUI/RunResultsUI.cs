@@ -6,8 +6,8 @@ public class RunResultsUI : MonoBehaviour
 {
     [SerializeField] private GameObject resultsMenu;
     [SerializeField] private Health towerHealth;
+    [SerializeField] private GameObject background;
 
-    [SerializeField] private TextMeshProUGUI coinsText;
     [SerializeField] private TextMeshProUGUI soulsText;
     [SerializeField] private TextMeshProUGUI xpText;
 
@@ -30,10 +30,10 @@ public class RunResultsUI : MonoBehaviour
     {
         Time.timeScale = 0f;
         resultsMenu.SetActive(true);
+        background.SetActive(true);
 
-        coinsText.text = StatsManager.Instance.CoinsCollectedInRun.ToString();
-        soulsText.text = StatsManager.Instance.SoulsCollectedInRun.ToString();
-        xpText.text = StatsManager.Instance.XPCollectedInRun.ToString();
+        soulsText.text = $"+{StatsManager.Instance.SoulsCollectedInRun}";
+        xpText.text = $"+{StatsManager.Instance.XPCollectedInRun}";
     }
 
     public void ResultsClaim()
@@ -46,8 +46,8 @@ public class RunResultsUI : MonoBehaviour
             levelUpMenu.SetActive(true);
 
             levelUpText.text = $"Leveled Up {levelsGained} times!";
-            bonusSoulsText.text = $"+{StatsManager.Instance.CalculateLevelUpBonus()} Souls";
-            sigilsRewardText.text = $"+{StatsManager.Instance.CalculateSigilsReward()} Sigils";
+            bonusSoulsText.text = $"+{StatsManager.Instance.CalculateLevelUpBonus()}";
+            sigilsRewardText.text = $"+{StatsManager.Instance.CalculateSigilsReward()}";
         }
         else
         {
