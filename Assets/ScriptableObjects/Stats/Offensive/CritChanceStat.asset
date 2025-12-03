@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: CritChanceStat
   m_EditorClassIdentifier: Assembly-CSharp::StatDefinition
   statName: Critical Chance
+  icon: {fileID: 21300000, guid: a75085037fd278148ab9bc1455cf53dc, type: 3}
   type: 8
   category: 0
   unlockLevel: 5
