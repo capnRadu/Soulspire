@@ -7,6 +7,7 @@ public class StatSlot : MonoBehaviour
     private RuntimeStat runtimeStat;
 
     [SerializeField] private TextMeshProUGUI statName;
+    [SerializeField] private Image icon;
     [SerializeField] private TextMeshProUGUI level;
     [SerializeField] private TextMeshProUGUI value;
     [SerializeField] private Button upgradeButton;
@@ -31,6 +32,7 @@ public class StatSlot : MonoBehaviour
     public void Initialize(RuntimeStat stat, bool hubMode)
     {
         runtimeStat = stat;
+        icon.sprite = stat.definition.icon;
         isHubMode = hubMode;
         upgradeButton.onClick.AddListener(OnUpgradeClicked);
         UpdateUI();

@@ -4,6 +4,7 @@ using UnityEngine;
 public class StatDefinition : ScriptableObject
 {
     public string statName;
+    public Sprite icon;
     public StatType type;
     public StatCategory category;
     public int unlockLevel;

@@ -74,6 +74,8 @@ public class StatsManager : MonoBehaviour
     public int CurrentSouls => currentSouls;
     [SerializeField] private int currentSigils;
     public int CurrentSigils => currentSigils;
+    [SerializeField] private int currentDiamonds;
+    public int CurrentDiamonds => currentDiamonds;
 
     private int currentLevel = 1;
     public int CurrentLevel => currentLevel;
@@ -233,6 +235,18 @@ public class StatsManager : MonoBehaviour
     public void EarnSigils(int amount)
     {
         currentSigils += amount;
+        OnCurrencyChanged?.Invoke();
+    }
+
+    public void SpendDiamonds(int amount)
+    {
+        currentDiamonds -= amount;
+        OnCurrencyChanged?.Invoke();
+    }
+
+    public void EarnDiamonds(int amount)
+    {
+        currentDiamonds += amount;
         OnCurrencyChanged?.Invoke();
     }
 

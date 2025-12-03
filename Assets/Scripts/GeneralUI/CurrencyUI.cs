@@ -8,6 +8,7 @@ public class CurrencyUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI coinsText;
     [SerializeField] private TextMeshProUGUI soulsText;
     [SerializeField] private TextMeshProUGUI sigilsText;
+    [SerializeField] private TextMeshProUGUI diamondsText;
 
     [SerializeField] private Slider xpSlider;
     [SerializeField] private TextMeshProUGUI levelText;
@@ -35,9 +36,25 @@ public class CurrencyUI : MonoBehaviour
 
     private void UpdateCurrencyDisplay()
     {
-        coinsText.text = StatsManager.Instance.CurrentCoins.ToString();
-        soulsText.text = StatsManager.Instance.CurrentSouls.ToString();
-        sigilsText.text = StatsManager.Instance.CurrentSigils.ToString();
+        if (coinsText != null)
+        {
+            coinsText.text = StatsManager.Instance.CurrentCoins.ToString();
+        }
+
+        if (soulsText != null)
+        {
+            soulsText.text = StatsManager.Instance.CurrentSouls.ToString();
+        }
+
+        if (sigilsText != null)
+        {
+            sigilsText.text = StatsManager.Instance.CurrentSigils.ToString();
+        }
+
+        if (diamondsText != null)
+        {
+            diamondsText.text = StatsManager.Instance.CurrentDiamonds.ToString();
+        }
     }
 
     private void UpdateXPDisplay()
@@ -58,7 +75,7 @@ public class CurrencyUI : MonoBehaviour
 
     private void UpdateLevelDisplay()
     {
-        levelText.text = $"Lvl {StatsManager.Instance.CurrentLevel}";
+        levelText.text = $"{StatsManager.Instance.CurrentLevel}";
     }
 
     private IEnumerator AnimateExperience(float targetXP)

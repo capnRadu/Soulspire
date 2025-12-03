@@ -7,6 +7,7 @@ public class StatTreeSlot : MonoBehaviour
     private RuntimeStat runtimeStat;
 
     [SerializeField] private TextMeshProUGUI statName;
+    [SerializeField] private Image icon;
     [SerializeField] private Button purchaseButton;
     [SerializeField] private TextMeshProUGUI costText;
     [SerializeField] private GameObject lockedOverlay;
@@ -27,6 +28,7 @@ public class StatTreeSlot : MonoBehaviour
     public void Initialize(RuntimeStat stat)
     {
         runtimeStat = stat;
+        icon.sprite = stat.definition.icon;
         statName.text = stat.definition.statName;
         unlockLevelText.text = $"Unlocks at Lvl {stat.definition.unlockLevel}";
         purchaseButton.onClick.AddListener(OnPurchaseClicked);
@@ -41,7 +43,7 @@ public class StatTreeSlot : MonoBehaviour
         {
             lockedOverlay.SetActive(false);
             purchaseButton.interactable = false;
-            costText.text = "Purchased";
+            costText.text = "";
 
             return;
         }
