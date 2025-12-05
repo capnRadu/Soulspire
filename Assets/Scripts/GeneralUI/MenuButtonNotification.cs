@@ -5,11 +5,13 @@ public class MenuButtonNotification : MonoBehaviour
     private enum NotificationType
     {
         Research,
-        Stats
+        Stats,
+        Skins
     }
 
     [SerializeField] private NotificationType notificationType;
     [SerializeField] private GameObject notificationIcon;
+    [SerializeField] private SkinManager skinManager;
 
     private void OnEnable()
     {
@@ -24,40 +26,62 @@ public class MenuButtonNotification : MonoBehaviour
 
     private void UpdateUI()
     {
-        bool hasAffordableStat = false;
-        int currentLevel = StatsManager.Instance.CurrentLevel;
+        bool hasAffordableThing = false;
 
-        foreach (RuntimeStat stat in StatsManager.Instance.GetAllRuntimeStats())
+        if (notificationType == NotificationType.Skins)
         {
-            if (!stat.IsUnlocked(currentLevel))
+            if (skinManager != null)
             {
-                continue;
-            }
-
-            if (notificationType == NotificationType.Research)
-            {
-                if (!stat.isPurchased) continue;
-
-                if (stat.IsMaxedOut()) continue;
-
-                if (StatsManager.Instance.CurrentSouls >= stat.GetSoulCost())
+                foreach (var skin in skinManager.GetAllSkins())
                 {
-                    hasAffordableStat = true;
-                    break;
+                    if (skin.isUnlocked) continue;
+
+                    if (StatsManager.Instance.CurrentDiamonds >= skin.skinDefinition.cost)
+                    {
+                        hasAffordableThing = true;
+                        break;
+                    }
                 }
             }
-            else
-            {
-                if (stat.isPurchased) continue;
+        }
+        else
+        {
+            int currentLevel = StatsManager.Instance.CurrentLevel;
 
-                if (StatsManager.Instance.CurrentSigils >= stat.definition.sigilsPurchaseCost)
+            foreach (RuntimeStat stat in StatsManager.Instance.GetAllRuntimeStats())
+            {
+                if (!stat.IsUnlocked(currentLevel))
                 {
-                    hasAffordableStat = true;
-                    break;
+                    continue;
+                }
+
+                if (notificationType == NotificationType.Research)
+                {
+                    if (!stat.isPurchased) continue;
+                    if (stat.IsMaxedOut()) continue;
+
+                    if (StatsManager.Instance.CurrentSouls >= stat.GetSoulCost())
+                    {
+                        hasAffordableThing = true;
+                        break;
+                    }
+                }
+                else if (notificationType == NotificationType.Stats)
+                {
+                    if (stat.isPurchased) continue;
+
+                    if (StatsManager.Instance.CurrentSigils >= stat.definition.sigilsPurchaseCost)
+                    {
+                        hasAffordableThing = true;
+                        break;
+                    }
                 }
             }
         }
 
-        notificationIcon.SetActive(hasAffordableStat);
+        if (notificationIcon != null)
+        {
+            notificationIcon.SetActive(hasAffordableThing);
+        }
     }
 }

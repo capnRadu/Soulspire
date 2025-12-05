@@ -23,7 +23,7 @@ public enum StatCategory
     Defensive
 }
 
-[System.Serializable]
+[Serializable]
 public class RuntimeStat
 {
     public StatDefinition definition;
