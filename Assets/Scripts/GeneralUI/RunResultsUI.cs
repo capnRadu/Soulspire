@@ -16,6 +16,9 @@ public class RunResultsUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI bonusSoulsText;
     [SerializeField] private TextMeshProUGUI sigilsRewardText;
 
+    [SerializeField] private AudioSource popUpOpenSound;
+    [SerializeField] private AudioSource popUpCloseSound;
+
     private void OnEnable()
     {
         towerHealth.OnDeath += ShowResults;
@@ -26,11 +29,12 @@ public class RunResultsUI : MonoBehaviour
         towerHealth.OnDeath -= ShowResults;
     }
 
-    private void ShowResults()
+    public void ShowResults()
     {
         Time.timeScale = 0f;
         resultsMenu.SetActive(true);
         background.SetActive(true);
+        popUpOpenSound.Play();
 
         soulsText.text = $"+{StatsManager.Instance.SoulsCollectedInRun}";
         xpText.text = $"+{StatsManager.Instance.XPCollectedInRun}";
@@ -44,6 +48,7 @@ public class RunResultsUI : MonoBehaviour
         {
             resultsMenu.SetActive(false);
             levelUpMenu.SetActive(true);
+            popUpOpenSound.Play();
 
             levelUpText.text = $"Leveled Up {levelsGained} times!";
             bonusSoulsText.text = $"+{StatsManager.Instance.CalculateLevelUpBonus()}";
@@ -65,6 +70,7 @@ public class RunResultsUI : MonoBehaviour
     private void GoToHub()
     {
         Time.timeScale = 1f;
+        popUpCloseSound.Play();
         StatsManager.Instance.OnRunEnded();
         SceneManager.LoadScene("MainMenu");
     }
