@@ -43,7 +43,7 @@ public class StatTreeSlot : MonoBehaviour
         {
             lockedOverlay.SetActive(false);
             purchaseButton.interactable = false;
-            costText.text = "";
+            costText.text = "Owned";
 
             return;
         }
