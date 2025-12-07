@@ -25,9 +25,12 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
         _showAdButton.onClick.AddListener(ShowAd);
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        LoadAd();
+        if (!_showAdButton.interactable)
+        {
+            LoadAd();
+        }
     }
 
     // Call this public method when you want to get an ad ready to show.
@@ -68,7 +71,6 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
             // Grant a reward.
 
             StatsManager.Instance.EarnDiamonds(10);
-            LoadAd();
         }
     }
 
@@ -83,8 +85,6 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
     {
         Debug.Log($"Error showing Ad Unit {adUnitId}: {error.ToString()} - {message}");
         // Use the error details to determine whether to try to load another ad.
-
-        LoadAd();
     }
 
     public void OnUnityAdsShowStart(string adUnitId) { }
