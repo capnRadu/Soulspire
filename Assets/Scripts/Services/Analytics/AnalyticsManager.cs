@@ -12,7 +12,12 @@ public class AnalyticsManager : MonoBehaviour
         get => userGaveConsent;
     }
 
-    public bool isInitialized = false;
+    private bool isMenuInitialized = false;
+    public bool IsMenuInitialized
+    {
+        get => isMenuInitialized;
+        set => isMenuInitialized = value;
+    }
 
     private void Awake()
     {
@@ -47,6 +52,5 @@ public class AnalyticsManager : MonoBehaviour
         };
 
         EndUserConsent.SetConsentState(consentState);
-        isInitialized = true;
     }
 }

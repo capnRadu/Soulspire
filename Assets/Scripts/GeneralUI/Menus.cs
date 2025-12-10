@@ -9,7 +9,7 @@ public class Menus : MonoBehaviour
 
     private void Start()
     {
-        if (AnalyticsManager.Instance != null && !AnalyticsManager.Instance.isInitialized)
+        if (AnalyticsManager.Instance != null && !AnalyticsManager.Instance.IsMenuInitialized)
         {
             StartCoroutine(ShowConsentMenu());
         }
@@ -20,6 +20,7 @@ public class Menus : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         popUpOpenSound.Play();
         consentMenu.SetActive(true);
+        AnalyticsManager.Instance.IsMenuInitialized = true;
     }
 
     public void StartGame()
