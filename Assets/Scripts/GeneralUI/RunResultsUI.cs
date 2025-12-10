@@ -67,7 +67,7 @@ public class RunResultsUI : MonoBehaviour
 
     public void LevelUpClaim()
     {
-        StatsManager.Instance.EarnSouls(StatsManager.Instance.CalculateLevelUpBonus());
+        StatsManager.Instance.EarnSouls(StatsManager.Instance.CalculateLevelUpBonus(), true);
         StatsManager.Instance.EarnSigils(StatsManager.Instance.CalculateSigilsReward());
         GoToHub();
     }

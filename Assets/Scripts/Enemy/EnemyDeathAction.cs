@@ -30,7 +30,7 @@ public class EnemyDeathAction : MonoBehaviour
     private void HandleDeath()
     {
         StatsManager.Instance.EarnCoins(enemy.CoinsOnDeath);
-        StatsManager.Instance.EarnSouls(enemy.SoulsOnDeath);
+        StatsManager.Instance.EarnSouls(enemy.SoulsOnDeath, true);
         StatsManager.Instance.EarnXP(enemy.ExperienceOnDeath);
 
         GameObject rewardsUI = Instantiate(rewardsPrefab, rewardsSpawnPoint.position, Quaternion.identity);

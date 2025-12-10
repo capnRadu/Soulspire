@@ -93,6 +93,9 @@ public class StatsManager : MonoBehaviour
     public float XPCollectedInRun => xpCollectedInRun;
     [SerializeField] private int soulsRewardPerLevelUp = 10;
 
+    public bool isXpBuffActive = false;
+    public bool isSoulsBuffActive = false;
+
     public event Action OnCurrencyChanged;
     public event Action<StatType> OnStatUpgraded;
     public event Action OnXPChange;
@@ -210,8 +213,13 @@ public class StatsManager : MonoBehaviour
         OnCurrencyChanged?.Invoke();
     }
 
-    public void EarnSouls(int amount)
+    public void EarnSouls(int amount, bool shouldBuff = false)
     {
+        if (shouldBuff && isSoulsBuffActive)
+        {
+            amount *= 2;
+        }
+
         currentSouls += amount;
         soulsCollectedInRun += amount;
         OnCurrencyChanged?.Invoke();
@@ -268,6 +276,11 @@ public class StatsManager : MonoBehaviour
 
     public void EarnXP(float amount)
     {
+        if (isXpBuffActive)
+        {
+            amount *= 2f;
+        }
+
         currentXP += amount;
         xpCollectedInRun += amount;
         CheckForLevelUp();
