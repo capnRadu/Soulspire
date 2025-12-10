@@ -11,6 +11,7 @@ using UnityEngine.UI;
 public class WaveManager : MonoBehaviour
 {
     [SerializeField] private Transform tower;
+    [SerializeField] private Health towerHealth;
     [SerializeField] private Slider waveTimerSlider;
     [SerializeField] private TextMeshProUGUI waveText;
 
@@ -146,6 +147,10 @@ public class WaveManager : MonoBehaviour
     {
         isWaveActive = false;
 
+        float playerCurrentHealth = towerHealth.CurrentHealth;
+        int waveReached = currentWaveIndex + 1;
+        AnalyticsEventsManager.Instance.RecordWaveCompleteEvent(playerCurrentHealth, waveReached);
+
         if (currentWaveIndex < waves.Count - 1)
         {
             currentWaveIndex++;
@@ -173,6 +178,11 @@ public class WaveManager : MonoBehaviour
 
         yield return new WaitForSeconds(timeBetweenWaves);
         StartNextWave();
+    }
+
+    public int GetCurrentWave()
+    {
+        return currentWaveIndex + 1;
     }
 
     private void OnDrawGizmos()

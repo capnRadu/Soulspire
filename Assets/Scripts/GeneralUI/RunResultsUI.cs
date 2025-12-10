@@ -31,6 +31,11 @@ public class RunResultsUI : MonoBehaviour
 
     public void ShowResults()
     {
+        int waveReached = FindFirstObjectByType<WaveManager>().GetCurrentWave();
+        int soulsGained = StatsManager.Instance.SoulsCollectedInRun;
+
+        AnalyticsEventsManager.Instance.RecordRunSurrenderEvent(waveReached, soulsGained);
+
         Time.timeScale = 0f;
         resultsMenu.SetActive(true);
         background.SetActive(true);

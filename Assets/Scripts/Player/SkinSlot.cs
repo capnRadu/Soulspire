@@ -101,6 +101,11 @@ public class SkinSlot : MonoBehaviour
         StatsManager.Instance.SpendDiamonds(costAmount);
         buySound.Play();
         menuManager.EquipSkin(skinData);
+
+        string skinName = skinData.skinDefinition.skinName;
+        int playerLevel = StatsManager.Instance.CurrentLevel;
+
+        AnalyticsEventsManager.Instance.RecordSkinPurchasedEvent(skinName, playerLevel);
     }
 
     private void OnPreviewClicked()

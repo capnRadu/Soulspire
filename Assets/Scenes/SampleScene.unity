@@ -14344,6 +14344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveManager
   tower: {fileID: 1632124239}
+  towerHealth: {fileID: 1632124240}
   waveTimerSlider: {fileID: 8598388835190267203}
   waveText: {fileID: 7944953073400639889}
   waves:

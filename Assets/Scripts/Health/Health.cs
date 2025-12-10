@@ -8,6 +8,7 @@ public class Health : MonoBehaviour
     [SerializeField] private bool isPlayer;
     [SerializeField] private float maxHealth;
     private float currentHealth;
+    public float CurrentHealth => currentHealth;
 
     private bool isDead = false;
     public bool IsDead => isDead;

@@ -24,12 +24,14 @@ public class Player : MonoBehaviour
     private void Start()
     {
         StatsManager.Instance.OnStatUpgraded += HandleStatUpgrade;
+        towerHealth.OnDeath += TriggerDeathEvent;
         HandleStatUpgrade(StatType.AttackSpeed);
     }
 
     private void OnDisable()
     {
         StatsManager.Instance.OnStatUpgraded -= HandleStatUpgrade;
+        towerHealth.OnDeath -= TriggerDeathEvent;
     }
 
     private void HandleStatUpgrade(StatType statType)
@@ -42,6 +44,14 @@ public class Player : MonoBehaviour
             float calculatedCooldown = baseCooldown / attackSpeedStat;
             animator.SetFloat("castSpeedMultiplier", baseCooldown / calculatedCooldown);
         }
+    }
+
+    private void TriggerDeathEvent()
+    {
+        int waveReached = FindFirstObjectByType<WaveManager>().GetCurrentWave();
+        int soulsGained = StatsManager.Instance.SoulsCollectedInRun;
+
+        AnalyticsEventsManager.Instance.RecordPlayerDeathEvent(waveReached, soulsGained);
     }
 
     private void Update()

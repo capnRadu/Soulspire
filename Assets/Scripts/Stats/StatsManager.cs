@@ -156,6 +156,12 @@ public class StatsManager : MonoBehaviour
             OnStatUpgraded?.Invoke(type);
 
             Debug.Log($"Upgraded {type} to Run Level {stat.runLevel}. New Value: {stat.GetValue()}");
+
+            string statName = stat.definition.statName;
+            string statType = "Run";
+            int statLevelReached = stat.runLevel + stat.permanentLevel;
+
+            AnalyticsEventsManager.Instance.RecordStatUpgradeEvent(statName, statType, statLevelReached);
         }
     }
 
@@ -177,6 +183,12 @@ public class StatsManager : MonoBehaviour
             SpendSouls(cost);
 
             Debug.Log($"Upgraded {type} Permanently to Level {stat.permanentLevel}.");
+
+            string statName = stat.definition.statName;
+            string statType = "Permanent";
+            int statLevelReached = stat.permanentLevel;
+
+            AnalyticsEventsManager.Instance.RecordStatUpgradeEvent(statName, statType, statLevelReached);
         }
     }
 
@@ -220,12 +232,19 @@ public class StatsManager : MonoBehaviour
             stat.isPurchased = true;
             SpendSigils(cost);
             Debug.Log($"Purchased {stat.definition.statName} for {cost} Sigils.");
+
+            string statName = stat.definition.statName;
+            int playerLevel = currentLevel;
+            int playerCurrentSigils = currentSigils;
+
+            AnalyticsEventsManager.Instance.RecordStatUnlockedEvent(statName, playerLevel, playerCurrentSigils);
         }
     }
 
     public void SpendSigils(int amount)
     {
         currentSigils -= amount;
+        Debug.Log($"Spent {amount} Sigils. Remaining Sigils: {currentSigils}");
         OnCurrencyChanged?.Invoke();
     }
 
@@ -301,6 +320,11 @@ public class StatsManager : MonoBehaviour
         startOfRunLevel = currentLevel;
         soulsCollectedInRun = 0;
         xpCollectedInRun = 0;
+
+        int currentSoulsAtRunStart = currentSouls;
+        int currentPlayerLevelAtRunStart = currentLevel;
+
+        AnalyticsEventsManager.Instance.RecordRunStartEvent(currentSoulsAtRunStart, currentPlayerLevelAtRunStart);
     }
 
     public int CalculateLevelUpBonus()
