@@ -581,7 +581,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 588006631}
+      - m_Target: {fileID: 263362275}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
         m_Mode: 1
@@ -595,7 +595,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 111836360}
         m_TargetAssemblyTypeName: ShopMenu, Assembly-CSharp
-        m_MethodName: PurchaseKingBundle
+        m_MethodName: OnPurchaseKingBundleButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2372,6 +2372,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9854742a8c426ac4ab37f7b0ac8109be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShopMenu
+  iapManager: {fileID: 912451586}
+  wizardBundleButtonText: {fileID: 494241828}
+  masteryBundleButtonText: {fileID: 941482209}
+  kingBundleButtonText: {fileID: 1837089651}
+  purchaseDoubleXpButton: {fileID: 6765948657611486472}
+  doubleXpButtonText: {fileID: 562806054302228749}
+  purchaseDoubleSoulsButton: {fileID: 1716263646}
+  doubleSoulsButtonText: {fileID: 1218548891}
+  bagOfDiamondsButtonText: {fileID: 816851619}
+  bucketOfDiamondsButtonText: {fileID: 926132187}
+  barrelOfDiamondsButtonText: {fileID: 1523212077}
+  chestOfDiamondsButtonText: {fileID: 494414563}
   purchaseSoulsPouchButton: {fileID: 237686466}
   purchaseSoulsUrnButton: {fileID: 29950476}
   purchaseSoulsAltarButton: {fileID: 544686009}
@@ -4971,7 +4983,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 588006631}
+      - m_Target: {fileID: 263362275}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
         m_Mode: 1
@@ -4985,7 +4997,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 111836360}
         m_TargetAssemblyTypeName: ShopMenu, Assembly-CSharp
-        m_MethodName: PurchaseBucketOfDiamonds
+        m_MethodName: OnPurchaseBucketOfDiamondsButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6755,7 +6767,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 588006631}
+      - m_Target: {fileID: 263362275}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
         m_Mode: 1
@@ -6769,7 +6781,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 111836360}
         m_TargetAssemblyTypeName: ShopMenu, Assembly-CSharp
-        m_MethodName: PurchaseBarrelOfDiamonds
+        m_MethodName: OnPurchaseBarrelOfDiamondsButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14999,7 +15011,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 588006631}
+      - m_Target: {fileID: 263362275}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
         m_Mode: 1
@@ -15013,7 +15025,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 111836360}
         m_TargetAssemblyTypeName: ShopMenu, Assembly-CSharp
-        m_MethodName: PurchaseWizardBundle
+        m_MethodName: OnPurchaseWizardBundleButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15144,7 +15156,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 588006631}
+      - m_Target: {fileID: 263362275}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
         m_Mode: 1
@@ -15158,7 +15170,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 111836360}
         m_TargetAssemblyTypeName: ShopMenu, Assembly-CSharp
-        m_MethodName: PurchaseChestOfDiamonds
+        m_MethodName: OnPurchaseChestOfDiamondsButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15651,6 +15663,61 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1153721246}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &912451585
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 912451587}
+  - component: {fileID: 912451586}
+  m_Layer: 0
+  m_Name: IAPManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &912451586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912451585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5986e6d93ee9d3046961805b61b77dd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IAPManager
+  wizardBundleProductId: wizard_bundle
+  masteryBundleProductId: mastery_bundle
+  kingBundleProductId: king_bundle
+  soulsDoublerProductId: souls_doubler
+  xpDoublerProductId: xp_doubler
+  diamonds100ProductId: diamonds_100
+  diamonds600ProductId: diamonds_600
+  diamonds1300ProductId: diamonds_1300
+  diamonds2800ProductId: diamonds_2800
+  shopMenu: {fileID: 111836360}
+  purchaseSound: {fileID: 588006631}
+--- !u!4 &912451587
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912451585}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &926132185
 GameObject:
@@ -23690,7 +23757,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 588006631}
+      - m_Target: {fileID: 263362275}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
         m_Mode: 1
@@ -23704,7 +23771,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 111836360}
         m_TargetAssemblyTypeName: ShopMenu, Assembly-CSharp
-        m_MethodName: PurchaseMasteryBundle
+        m_MethodName: OnPurchaseMasteryBundleButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -31296,7 +31363,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 588006631}
+      - m_Target: {fileID: 263362275}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
         m_Mode: 1
@@ -31310,7 +31377,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 111836360}
         m_TargetAssemblyTypeName: ShopMenu, Assembly-CSharp
-        m_MethodName: PurchaseDoubleSoulsBuff
+        m_MethodName: OnPurchaseDoubleSoulsButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -33440,7 +33507,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 588006631}
+      - m_Target: {fileID: 263362275}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
         m_Mode: 1
@@ -33454,7 +33521,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 111836360}
         m_TargetAssemblyTypeName: ShopMenu, Assembly-CSharp
-        m_MethodName: PurchaseBagOfDiamonds
+        m_MethodName: OnPurchaseBagOfDiamondsButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -38442,7 +38509,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 588006631}
+      - m_Target: {fileID: 263362275}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
         m_Mode: 1
@@ -38456,7 +38523,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 111836360}
         m_TargetAssemblyTypeName: ShopMenu, Assembly-CSharp
-        m_MethodName: PurchaseDoubleXPBuff
+        m_MethodName: OnPurchaseDoubleXpButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -38650,6 +38717,7 @@ SceneRoots:
   - {fileID: 1822890586}
   - {fileID: 11938010}
   - {fileID: 1733658350}
+  - {fileID: 912451587}
   - {fileID: 3501470693563310266}
   - {fileID: 856442253}
   - {fileID: 238788529}
