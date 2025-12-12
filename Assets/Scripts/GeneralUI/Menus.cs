@@ -9,7 +9,7 @@ public class Menus : MonoBehaviour
 
     private void Start()
     {
-        if (AnalyticsManager.Instance != null && !AnalyticsManager.Instance.IsMenuInitialized)
+        if (AnalyticsManager.Instance != null && !AnalyticsManager.Instance.HasSeenMenu)
         {
             StartCoroutine(ShowConsentMenu());
         }
@@ -18,13 +18,22 @@ public class Menus : MonoBehaviour
     private IEnumerator ShowConsentMenu()
     {
         yield return new WaitForSeconds(0.5f);
-        popUpOpenSound.Play();
-        consentMenu.SetActive(true);
-        AnalyticsManager.Instance.IsMenuInitialized = true;
+
+        if (!AnalyticsManager.Instance.HasSeenMenu)
+        {
+            AnalyticsManager.Instance.MarkAsSeen();
+            popUpOpenSound.Play();
+            consentMenu.SetActive(true);
+        }
     }
 
     public void StartGame()
     {
         SceneManager.LoadScene("SampleScene");
+    }
+
+    public void TriggerResetProgress()
+    {
+        StatsManager.Instance.ResetAllProgress();
     }
 }

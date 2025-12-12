@@ -48,14 +48,16 @@ public class ShopMenu : MonoBehaviour
         purchaseSoulsUrnButton.interactable = StatsManager.Instance.CurrentDiamonds >= 250;
         purchaseSoulsAltarButton.interactable = StatsManager.Instance.CurrentDiamonds >= 1000;
 
-        if (StatsManager.Instance.isXpBuffActive)
+        if (StatsManager.Instance.IsXpBuffActive)
         {
             doubleXpButtonText.text = "Active";
+            purchaseDoubleXpButton.interactable = false;
         }
 
-        if (StatsManager.Instance.isSoulsBuffActive)
+        if (StatsManager.Instance.IsSoulsBuffActive)
         {
             doubleSoulsButtonText.text = "Active";
+            purchaseDoubleSoulsButton.interactable = false;
         }
     }
 
@@ -219,14 +221,14 @@ public class ShopMenu : MonoBehaviour
 
     public void PurchaseDoubleSoulsBuff()
     {
-        StatsManager.Instance.isSoulsBuffActive = true;
+        StatsManager.Instance.ActivateSoulsBuff();
         purchaseDoubleSoulsButton.interactable = false;
         doubleSoulsButtonText.text = "Active";
     }
 
     public void PurchaseDoubleXPBuff()
     {
-        StatsManager.Instance.isXpBuffActive = true;
+        StatsManager.Instance.ActivateXpBuff();
         purchaseDoubleXpButton.interactable = false;
         doubleXpButtonText.text = "Active";
     }

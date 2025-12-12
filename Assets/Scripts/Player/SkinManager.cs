@@ -19,20 +19,28 @@ public class SkinManager : MonoBehaviour
 
     private void Awake()
     {
+        string lastEquippedName = PlayerPrefs.GetString("Skin_Equipped", "");
+
         foreach (var skin in availableSkins)
         {
+            bool savedUnlock = PlayerPrefs.GetInt($"Skin_{skin.skinName}_Unlocked", 0) == 1;
+            bool isUnlocked = skin.isDefault || savedUnlock;
+
             var runtimeSkin = new RuntimeSkinData
             {
                 skinDefinition = skin,
-                isUnlocked = skin.isDefault
+                isUnlocked = isUnlocked
             };
 
             runtimeSkins[skin.skinName] = runtimeSkin;
 
-            if (runtimeSkin.isUnlocked && EquippedSkin == null)
+            if (isUnlocked && skin.skinName == lastEquippedName)
             {
-                EquipSkin(runtimeSkin.skinDefinition);
-                EquippedSkin = runtimeSkin;
+                EquipSkinInternal(runtimeSkin);
+            }
+            else if (EquippedSkin == null && skin.isDefault)
+            {
+                EquipSkinInternal(runtimeSkin);
             }
         }
     }
@@ -42,12 +50,34 @@ public class SkinManager : MonoBehaviour
         return new List<RuntimeSkinData>(runtimeSkins.Values);
     }
 
+    private void EquipSkinInternal(RuntimeSkinData data)
+    {
+        EquippedSkin = data;
+        skinMaterial.SetColor("_BaseColor", data.skinDefinition.color);
+    }
+
     public void EquipSkin(SkinDefinition skinDef)
     {
         if (runtimeSkins.TryGetValue(skinDef.skinName, out RuntimeSkinData data))
         {
-            EquippedSkin = data;
-            skinMaterial.SetColor("_BaseColor", skinDef.color);
+            if (data.isUnlocked)
+            {
+                EquipSkinInternal(data);
+
+                PlayerPrefs.SetString("Skin_Equipped", skinDef.skinName);
+                PlayerPrefs.Save();
+            }
+        }
+    }
+
+    public void UnlockSkin(RuntimeSkinData data)
+    {
+        if (!data.isUnlocked)
+        {
+            data.isUnlocked = true;
+
+            PlayerPrefs.SetInt($"Skin_{data.skinDefinition.skinName}_Unlocked", 1);
+            PlayerPrefs.Save();
         }
     }
 

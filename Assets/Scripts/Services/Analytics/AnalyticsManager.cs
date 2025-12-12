@@ -6,18 +6,13 @@ public class AnalyticsManager : MonoBehaviour
 {
     public static AnalyticsManager Instance { get; private set; }
 
-    private bool userGaveConsent = false;
-    public bool UserGaveConsent
-    {
-        get => userGaveConsent;
-    }
+    private const string ConsentKey = "Analytics_UserConsent";
+    private const string SeenKey = "Analytics_HasSeenMenu";
 
-    private bool isMenuInitialized = false;
-    public bool IsMenuInitialized
-    {
-        get => isMenuInitialized;
-        set => isMenuInitialized = value;
-    }
+    private bool userGaveConsent = false;
+    public bool UserGaveConsent => userGaveConsent;
+
+    public bool HasSeenMenu => PlayerPrefs.GetInt(SeenKey, 0) == 1;
 
     private void Awake()
     {
@@ -29,6 +24,8 @@ public class AnalyticsManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+
+            userGaveConsent = PlayerPrefs.GetInt(ConsentKey, 0) == 1;
         }
     }
 
@@ -36,15 +33,25 @@ public class AnalyticsManager : MonoBehaviour
     {
         await UnityServices.InitializeAsync();
 
-        if (userGaveConsent)
+        if (HasSeenMenu)
         {
-            SetUserConsent(true);
+            SetUserConsent(userGaveConsent);
         }
+    }
+
+    public void MarkAsSeen()
+    {
+        PlayerPrefs.SetInt(SeenKey, 1);
+        PlayerPrefs.Save();
     }
 
     public void SetUserConsent(bool consent)
     {
         userGaveConsent = consent;
+
+        PlayerPrefs.SetInt(ConsentKey, consent ? 1 : 0);
+        PlayerPrefs.SetInt(SeenKey, 1);
+        PlayerPrefs.Save();
 
         var consentState = new ConsentState
         {

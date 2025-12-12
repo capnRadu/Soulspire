@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum StatType
 {
@@ -93,8 +94,10 @@ public class StatsManager : MonoBehaviour
     public float XPCollectedInRun => xpCollectedInRun;
     [SerializeField] private int soulsRewardPerLevelUp = 10;
 
-    public bool isXpBuffActive = false;
-    public bool isSoulsBuffActive = false;
+    private bool isXpBuffActive = false;
+    public bool IsXpBuffActive => isXpBuffActive;
+    private bool isSoulsBuffActive = false;
+    public bool IsSoulsBuffActive => isSoulsBuffActive;
 
     public event Action OnCurrencyChanged;
     public event Action<StatType> OnStatUpgraded;
@@ -114,6 +117,7 @@ public class StatsManager : MonoBehaviour
         }
 
         InitializeStats();
+        LoadData();
     }
 
     private void InitializeStats()
@@ -128,6 +132,91 @@ public class StatsManager : MonoBehaviour
             stats.Add(statDef.type, newStat);
             runtimeStatsDebug.Add(newStat);
         }
+    }
+
+    public void SaveData()
+    {
+        // Currency
+        PlayerPrefs.SetInt("Currency_Souls", currentSouls);
+        PlayerPrefs.SetInt("Currency_Sigils", currentSigils);
+        PlayerPrefs.SetInt("Currency_Diamonds", currentDiamonds);
+
+        // Level Progression
+        PlayerPrefs.SetInt("Player_Level", currentLevel);
+        PlayerPrefs.SetFloat("Player_XP", currentXP);
+
+        // Stat Upgrades and Purchases
+        foreach (var stat in stats.Values)
+        {
+            string keyPrefix = $"Stat_{stat.definition.type}";
+            PlayerPrefs.SetInt($"{keyPrefix}_PermLevel", stat.permanentLevel);
+            PlayerPrefs.SetInt($"{keyPrefix}_Purchased", stat.isPurchased ? 1 : 0);
+        }
+
+        // IAP Buffs
+        PlayerPrefs.SetInt("IAP_DoubleSouls", isSoulsBuffActive ? 1 : 0);
+        PlayerPrefs.SetInt("IAP_DoubleXP", isXpBuffActive ? 1 : 0);
+
+        PlayerPrefs.Save();
+    }
+
+    private void LoadData()
+    {
+        // Currency
+        currentSouls = PlayerPrefs.GetInt("Currency_Souls", 0);
+        currentSigils = PlayerPrefs.GetInt("Currency_Sigils", 0);
+        currentDiamonds = PlayerPrefs.GetInt("Currency_Diamonds", 0);
+
+        // Level Progression
+        currentLevel = PlayerPrefs.GetInt("Player_Level", 1);
+        currentXP = PlayerPrefs.GetFloat("Player_XP", 0f);
+
+        // Stat Upgrades and Purchases
+        foreach (var stat in stats.Values)
+        {
+            string keyPrefix = $"Stat_{stat.definition.type}";
+            stat.permanentLevel = PlayerPrefs.GetInt($"{keyPrefix}_PermLevel", 0);
+
+            // Check Unlock Level OR Saved Purchase State
+            bool purchasedSave = PlayerPrefs.GetInt($"{keyPrefix}_Purchased", 0) == 1;
+            stat.isPurchased = purchasedSave;
+        }
+
+        // IAP Buffs
+        isSoulsBuffActive = PlayerPrefs.GetInt("IAP_DoubleSouls", 0) == 1;
+        isXpBuffActive = PlayerPrefs.GetInt("IAP_DoubleXP", 0) == 1;
+    }
+
+    public void ResetAllProgress()
+    {
+        PlayerPrefs.DeleteKey("Currency_Souls");
+        PlayerPrefs.DeleteKey("Currency_Sigils");
+        PlayerPrefs.DeleteKey("Player_Level");
+        PlayerPrefs.DeleteKey("Player_XP");
+
+        foreach (var stat in stats.Values)
+        {
+            string keyPrefix = $"Stat_{stat.definition.type}";
+
+            PlayerPrefs.DeleteKey($"{keyPrefix}_PermLevel");
+            PlayerPrefs.DeleteKey($"{keyPrefix}_Purchased");
+        }
+
+        PlayerPrefs.Save();
+
+        currentSouls = 0;
+        currentSigils = 0;
+
+        currentLevel = 1;
+        currentXP = 0;
+
+        foreach (var stat in stats.Values)
+        {
+            stat.permanentLevel = 0;
+            stat.isPurchased = false;
+        }
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public float GetStatValue(StatType type)
@@ -184,6 +273,7 @@ public class StatsManager : MonoBehaviour
         {
             stat.permanentLevel++;
             SpendSouls(cost);
+            SaveData();
 
             Debug.Log($"Upgraded {type} Permanently to Level {stat.permanentLevel}.");
 
@@ -223,6 +313,7 @@ public class StatsManager : MonoBehaviour
         currentSouls += amount;
         soulsCollectedInRun += amount;
         OnCurrencyChanged?.Invoke();
+        SaveData();
     }
 
     public void PurchaseStat(RuntimeStat stat)
@@ -239,6 +330,8 @@ public class StatsManager : MonoBehaviour
         {
             stat.isPurchased = true;
             SpendSigils(cost);
+            SaveData();
+
             Debug.Log($"Purchased {stat.definition.statName} for {cost} Sigils.");
 
             string statName = stat.definition.statName;
@@ -260,18 +353,21 @@ public class StatsManager : MonoBehaviour
     {
         currentSigils += amount;
         OnCurrencyChanged?.Invoke();
+        SaveData();
     }
 
     public void SpendDiamonds(int amount)
     {
         currentDiamonds -= amount;
         OnCurrencyChanged?.Invoke();
+        SaveData();
     }
 
     public void EarnDiamonds(int amount)
     {
         currentDiamonds += amount;
         OnCurrencyChanged?.Invoke();
+        SaveData();
     }
 
     public void EarnXP(float amount)
@@ -301,6 +397,8 @@ public class StatsManager : MonoBehaviour
 
             required = CalculateRequiredXP();
         }
+
+        SaveData();
     }
 
     private float CalculateRequiredXP()
@@ -372,5 +470,17 @@ public class StatsManager : MonoBehaviour
         }
 
         currentCoins = 0;
+    }
+
+    public void ActivateXpBuff()
+    {
+        isXpBuffActive = true;
+        SaveData();
+    }
+
+    public void ActivateSoulsBuff()
+    {
+        isSoulsBuffActive = true;
+        SaveData();
     }
 }

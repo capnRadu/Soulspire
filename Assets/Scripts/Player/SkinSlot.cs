@@ -97,10 +97,12 @@ public class SkinSlot : MonoBehaviour
     private void OnPurchaseClicked()
     {
         int costAmount = skinData.skinDefinition.cost;
-        skinData.isUnlocked = true;
         StatsManager.Instance.SpendDiamonds(costAmount);
-        buySound.Play();
+
+        skinsManager.UnlockSkin(skinData);
         menuManager.EquipSkin(skinData);
+
+        buySound.Play();
 
         string skinName = skinData.skinDefinition.skinName;
         int playerLevel = StatsManager.Instance.CurrentLevel;

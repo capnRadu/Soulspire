@@ -52,6 +52,9 @@ public class ConsentMenu : MonoBehaviour
         AnalyticsManager.Instance.SetUserConsent(false);
         AnalyticsService.Instance.RequestDataDeletion();
 
+        // If the menu needs to appear again next time the game is opened after deleting data
+        // PlayerPrefs.DeleteKey("Analytics_HasSeenMenu");
+
         optInButton.interactable = true;
         optOutButton.interactable = false;
         deleteDataButton.interactable = false;
