@@ -10,6 +10,7 @@ public class StatTreeSlot : MonoBehaviour
     [SerializeField] private Image icon;
     [SerializeField] private Button purchaseButton;
     [SerializeField] private TextMeshProUGUI costText;
+    [SerializeField] private GameObject currencyIcon;
     [SerializeField] private GameObject lockedOverlay;
     [SerializeField] private TextMeshProUGUI unlockLevelText;
     [SerializeField] private AudioSource purchaseSound;
@@ -44,14 +45,13 @@ public class StatTreeSlot : MonoBehaviour
             lockedOverlay.SetActive(false);
             purchaseButton.interactable = false;
             costText.text = "Owned";
-
+            currencyIcon.SetActive(false);
             return;
         }
 
         if (!runtimeStat.IsUnlocked(StatsManager.Instance.CurrentLevel))
         {
             lockedOverlay.SetActive(true);
-
             return;
         }
 

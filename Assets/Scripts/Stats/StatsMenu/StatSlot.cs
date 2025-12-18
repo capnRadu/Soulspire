@@ -12,6 +12,9 @@ public class StatSlot : MonoBehaviour
     [SerializeField] private TextMeshProUGUI value;
     [SerializeField] private Button upgradeButton;
     [SerializeField] private TextMeshProUGUI cost;
+    [SerializeField] private Image currencyIcon;
+    [SerializeField] private Sprite coinSprite;
+    [SerializeField] private Sprite soulSprite;
     [SerializeField] private AudioSource buySound;
 
     private bool isHubMode;
@@ -51,7 +54,7 @@ public class StatSlot : MonoBehaviour
         {
             cost.text = "Max";
             upgradeButton.interactable = false;
-
+            currencyIcon.gameObject.SetActive(false);
             return;
         }
 
@@ -64,6 +67,7 @@ public class StatSlot : MonoBehaviour
             canAfford = StatsManager.Instance.CurrentSouls >= costAmount;
 
             cost.text = $"{costAmount}";
+            currencyIcon.sprite = soulSprite;
         }
         else
         {
@@ -71,6 +75,7 @@ public class StatSlot : MonoBehaviour
             canAfford = StatsManager.Instance.CurrentCoins >= costAmount;
 
             cost.text = $"{costAmount}";
+            currencyIcon.sprite = coinSprite;
         }
 
         upgradeButton.interactable = canAfford;

@@ -12,6 +12,7 @@ public class SkinSlot : MonoBehaviour
     [SerializeField] private Image icon;
     [SerializeField] private Button purchaseButton;
     [SerializeField] private TextMeshProUGUI cost;
+    [SerializeField] private GameObject currencyIcon;
     [SerializeField] private Button previewButton;
     [SerializeField] private TextMeshProUGUI preview;
     [SerializeField] private AudioSource buySound;
@@ -55,6 +56,7 @@ public class SkinSlot : MonoBehaviour
         {
             cost.text = "Owned";
             purchaseButton.interactable = false;
+            currencyIcon.SetActive(false);
         }
         else
         {
