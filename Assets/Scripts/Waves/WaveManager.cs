@@ -164,7 +164,6 @@ public class WaveManager : MonoBehaviour
                 waveText.text = "Victory!";
             }*/
 
-            currentWaveIndex = 0;
             StartCoroutine(PrepareNextWave());
         }
     }

@@ -14930,10 +14930,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 85daf48dfab13cd40b7ddb5794c92be7, type: 2}
   - {fileID: 11400000, guid: 39dd095d3994f6845b28d0c019eeda95, type: 2}
   runtimeStatsDebug: []
-  currentCoins: 1000
-  currentSouls: 1000
-  currentSigils: 1000
-  currentDiamonds: 1000
+  currentCoins: 0
+  currentSouls: 0
+  currentSigils: 0
+  currentDiamonds: 0
   soulsRewardPerLevelUp: 10
 --- !u!4 &774858529
 Transform:

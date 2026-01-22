@@ -82,7 +82,7 @@ public class StatsManager : MonoBehaviour
     public int CurrentLevel => currentLevel;
     private float currentXP = 0;
     public float CurrentXP => currentXP;
-    private float baseXPReq = 100f; 
+    private float baseXPReq = 200f; 
     private float xpMultiplier = 1.25f;
     public float RequiredXP => CalculateRequiredXP();
 
